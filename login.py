@@ -32,7 +32,7 @@ def login():
 
     token = response.json().get('access_token')
     if token:
-        print("Access Token:", token)
+        #print("Access Token:", token)
         return token
     else:
         print("Failed to retrieve access token.")
