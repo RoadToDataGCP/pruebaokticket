@@ -110,3 +110,24 @@ def get_companies_filtered(token):
     else:
         print("Error al obtener las empresas:")
         print(json.dumps(response.json(), indent=4, ensure_ascii=False))
+
+def get_gastos_by_empresa(token, empresa):
+    load_dotenv()
+
+    url = f"{os.getenv('HOST')}/api/expenses?with=companies"
+
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Accept': 'application/json',
+        'company': empresa
+    }
+
+    response = requests.get(url, headers=headers)
+
+    try:
+        gastos = response.json()
+        print(json.dumps(gastos, indent=4, ensure_ascii=False))
+    except json.JSONDecodeError:
+        print("⚠️ Error: La respuesta no es un JSON válido")
+        print(response.text)
+
