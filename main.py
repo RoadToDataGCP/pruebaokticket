@@ -61,10 +61,13 @@ def main():
                 print("❌ Debes iniciar sesión primero.")
         elif opcion == "7":
             print("🔄 Creando gastos...")
-            empresa = input("👉 Ingresa el ID de la empresa: ").strip()
             expenses.create_gasto(token)
             print("🔄 Mostrando gastos por empresa...")
+            empresa = input("👉 Ingresa el ID de la empresa: ").strip()
             expenses.get_gastos_by_empresa(token, empresa)
+            gasto_id = input("👉 Ingresa el ID del gasto a eliminar: ").strip()
+            expenses.get_gasto_by_id(token, gasto_id)
+            
             print("✅ Archivos generados eliminados.")
         elif opcion == "0":
             print("👋 Saliendo del programa.")
