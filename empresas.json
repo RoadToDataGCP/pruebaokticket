@@ -1,0 +1,42 @@
+[
+  {
+    "cif": "E112233445",
+    "name": "Smart Logistics S.A.",
+    "fiscal_address": "Calle Transporte, 78",
+    "postal_code": "29015",
+    "city": "Málaga",
+    "contact_number": "952334455",
+    "contact_email": "info@smartlogistics.com",
+    "language": "es"
+  },
+  {
+    "cif": "A123456789",
+    "name": "Tech Solutions S.L.",
+    "fiscal_address": "Calle Innovación, 123",
+    "postal_code": "28001",
+    "city": "Madrid",
+    "contact_number": "911223344",
+    "contact_email": "contacto@techsolutions.es",
+    "language": "es"
+  },
+  {
+    "cif": "C987654321",
+    "name": "Global Markets Ltd.",
+    "fiscal_address": "Av. Comercio Internacional, 45",
+    "postal_code": "41013",
+    "city": "Sevilla",
+    "contact_number": "954332211",
+    "contact_email": "info@globalmarkets.com",
+    "language": "en"
+  },
+  {
+    "cif": "D654321987",
+    "name": "Green Energy Corp.",
+    "fiscal_address": "Paseo Renovable, 22",
+    "postal_code": "08006",
+    "city": "Barcelona",
+    "contact_number": "932112233",
+    "contact_email": "support@greenenergy.es",
+    "language": "es"
+  }
+]
