@@ -1,0 +1,28 @@
+
+DATOS DE ACCESO API - OKTICKET PRO
+
+
+URL API: https://api.okticket.es/v2/public
+
+URL Gestor web: https://admin.okticket.es/
+
+
+Client ID: 408
+Client secret: 8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ
+
+-------------------------------
+Se han creado la empresa: B88160064 - RoadToData - DEMO  / 73413
+                           
+                    
+-------------------------------
+Se han creado el usuario para API: api@roadtodata.com / O:kJTA0bz_2JbWPBalVJ
+
+Usuario:   user@roadtodata.com/Rtd:2025
+
+Administrador: admin@roadtodata.com / Rtd:2025
+
+
+
+
+
+
