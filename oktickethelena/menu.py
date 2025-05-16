@@ -1,6 +1,6 @@
 import constantes 
 from obtenertoken import obtenerTokend, refrescarTokend
-from users import crearUser, obtenerListaTotalUsuarios, obtenerMiUsuario
+from users import createUser, obtenerListaTotalUsuarios, obtenerMiUsuario
 
 bandera = True
 
@@ -13,7 +13,8 @@ if __name__ == "__main__":
             case 2: # Refresacar tokend
                 refrescarTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", constantes.REFRESHTOKEND)
             case 3: # Crear usuario
-                crearUser("JRS-Enterprises", "Javi", "javiii1115.correo@gmail.com", "Hola123456*", [73825] , "1234", "1234", "1234")
+                createUser("JRS-Enterprises", "Javi", "javiii1115.correo@gmail.com", "Hola123456*", [73825] , "1234", "1234", "1234")
+                createUser("JRS-Enterprises", "Javi", "javiii1115.correo@gmail.com", "Hola123456*", [73825] , "1234", "1234", "1234")
             case 4: # Lista de usuarios
                 obtenerListaTotalUsuarios("JRS-Enterprises")
             case 5: # Mi usuario
