@@ -31,7 +31,8 @@ def createUser(nombreempresa, name, email, password, ids_companies, custom_id, c
 
     respuesta = rq.post(url, headers=headers, json=payload)
     datos = controlErrores(respuesta)
-    print(datos)
+    # Imprimir datos con formato legible
+    print(json.dumps(datos, indent=4, ensure_ascii=False))
 
 def obtenerListaTotalUsuarios(nombreempresa):
     url = f'{constantes.HOST}/api/users'
@@ -44,7 +45,8 @@ def obtenerListaTotalUsuarios(nombreempresa):
 
     respuesta = rq.get(url, headers=headers)
     datos = controlErrores(respuesta)
-    print(datos)
+        # Imprimir datos con formato legible
+    print(json.dumps(datos, indent=4, ensure_ascii=False))
     
 def obtenerMiUsuario():
     url = f'{constantes.HOST}/api/me?with=companies'

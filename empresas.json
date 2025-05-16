@@ -10,10 +10,11 @@
     "language": "es"
   },
   {
-    "cif": "A123456789",
+    "cif": "A123456788",
     "name": "Tech Solutions S.L.",
     "fiscal_address": "Calle Innovación, 123",
     "postal_code": "28001",
+    "max_users_limit_params": 100,
     "city": "Madrid",
     "contact_number": "911223344",
     "contact_email": "contacto@techsolutions.es",

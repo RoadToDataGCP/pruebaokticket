@@ -3,28 +3,37 @@ from obtenertoken import obtenerTokend
 from empresa import crearEmpresa, verEmpresas
 from users import createUser
 from utils import obtenernameid
+from expenses import create_gasto
+import constantes
+def main():
+    fake = Faker()
 
-fake = Faker()
+    # Obtener tocken 
+    obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
-# Obtener tocken 
-obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
+    token = constantes.TOKEND
+    #crearEmpresa()
+    # Obtener lista de empresas
+    empresas = verEmpresas()
+    print(empresas)
+    nameid = obtenernameid(empresas)
+    for empresa in nameid:
+        name = empresa["name"]
+        id = empresa["id"]
+        for _ in range(3):
+            print(f"Creando usuario para la empresa {name} con ID {id}")
+            # Crear usuario
+            createUser(name, fake.name(), fake.email(), fake.password(), [id] , "1234", "1234", "1234")
 
-#crearEmpresa()
-# Obtener lista de empresas
-empresas = verEmpresas()
-nameid = obtenernameid(empresas)
-for empresa in nameid:
-    name = empresa["name"]
-    id = empresa["id"]
-    for _ in range(3):
-        createUser(name, fake.name(), fake.email(), fake.password(), [id] , "1234", "1234", "1234")
-        
+    create_gasto(token, id)
+
+
 from login import login 
 import getters
 from time import time
 from utils import espera_con_barra, formato_hms
 import expenses
-
+'''
 def main():
     
     token = login()
@@ -101,6 +110,6 @@ def main():
     #print("Access Token:", token)
     # Add any other main functionality here
     #getters.get_users(token)
-
+'''
 if __name__ == "__main__":
     main()

@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 import os
 import json
 import datetime
+from faker import Faker
+import random
+from datetime import datetime
 
 def get_gastos_by_empresa(token, empresa):
     load_dotenv()
@@ -49,39 +52,45 @@ def get_gastos_by_date(token, fecha):
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
 
-def create_gasto(token):
+
+
+def create_gasto(token, company_id):
     load_dotenv()
+    fake = Faker('es_ES')  # Localización en español
 
     url = f"{os.getenv('HOST')}/api/expenses"
-
-    user_id = input("👉 Ingresa el ID del usuario: ").strip()
-    company_id = input("👉 Ingresa el ID de la empresa: ").strip()
-    department_id = input("👉 Ingresa el ID del departamento: ").strip()
-    type_id = input("👉 Ingresa el ID del tipo de gasto, 0 (ticket), 1 (factura), 2 (kilometraje), 4 (dieta): ").strip()
-    category_id = input("👉 Ingresa el ID de la categoría: ").strip()
-    date = input("👉 Ingresa la fecha (YYYY-MM-DD HH:MM:SS): ").strip()
-    amount = input("👉 Ingresa el importe: ").strip()
-    name = input("👉 Ingresa el nombre: ").strip()
-    comments = input("👉 Ingresa los comentarios: ").strip()
-
-    payload = json.dumps({
-      "user_id": user_id,
-      "company_id": company_id,
-      "department_id": department_id,
-      "type_id": type_id,
-      "category_id": category_id,
-      "status_id": 0,
-      "date": date,
-      "amount": amount,
-      "name": name,
-      "comments": comments
-    })
+    
     headers = {
-      'Authorization': f'Bearer {token}',
-      'Content-Type': 'application/json'
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json'
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    # Simulación de datos
+    user_id = str(random.randint(1000, 9999)) #Cambiar por un ID de usuario real, buscar a traves de la API.
+    department_id = str(random.randint(10, 99))
+    type_id = str(random.choice([0, 1, 2, 4]))
+    category_id = str(random.randint(1, 20))  # Asumimos que hay 20 categorías
+
+    # Fecha en los últimos 30 días
+    date = fake.date_time_between(start_date='-30d', end_date='now').strftime('%Y-%m-%d %H:%M:%S')
+    amount = round(random.uniform(10.00, 500.00), 2)  # Importe entre 10€ y 500€
+    name = fake.sentence(nb_words=3).rstrip('.')  # Nombre corto
+    comments = fake.text(max_nb_chars=100)
+
+    payload = json.dumps({
+        "user_id": user_id,
+        "company_id": company_id,
+        "department_id": department_id,
+        "type_id": type_id,
+        "category_id": category_id,
+        "status_id": 0,
+        "date": date,
+        "amount": amount,
+        "name": name,
+        "comments": comments
+    })
+
+    response = requests.post(url, headers=headers, data=payload)
 
     try:
         gastos = response.json()
@@ -89,6 +98,7 @@ def create_gasto(token):
     except json.JSONDecodeError:
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
+
 
 
 def get_gasto_by_id(token, gasto_id):
