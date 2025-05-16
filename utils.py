@@ -1,6 +1,19 @@
+import random
 import time
 import threading
 from tqdm import tqdm
+
+def obtenernameid(empresas):
+    nombreid = list()
+    for _, empresa in empresas.iterrows():
+        nombreid1 = {
+            'name': empresa["name"],
+            'id': empresa["id"]
+        }
+        nombreid.append(nombreid1)
+    return nombreid
+
+
 
 def espera_con_barra(segundos: int, mensaje: str = "Esperando"):
     hilo = threading.current_thread().name

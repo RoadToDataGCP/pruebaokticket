@@ -7,3 +7,6 @@ __pycache__/
 
 # Ignorar el directorio venv (virtual environment)
 venv/
+
+oktickethelena/__pycache__/
+OK TICKET - Documentación/
