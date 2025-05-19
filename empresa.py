@@ -33,7 +33,7 @@ def verEmpresas():
 
   payload={}
   headers = {
-    'Authorization': f'Bearer {constantes.TOKEND}',
+    'Authorization': f'Bearer {autUser()}',
     'Accept': 'application/json'
   }
   
@@ -45,9 +45,9 @@ def verEmpresas():
   empresasT = empresas.T.reset_index()
   allEmpresas = pd.json_normalize(empresasT[0])
   allEmpresas.to_csv(f'{current_path}/empresas.csv', index=False)
-  return allEmpresas[['id','name','cif','fiscal_address','postal_code','city','contact_number','contact_email']]
+  return allEmpresas
 
-#verEmpresas()
+print(verEmpresas())
 
 def verEmpresa(id: int):
   url = f"https://apipre.okticket.es/v2/public/api/companies/{id}"
