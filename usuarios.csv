@@ -1,0 +1,21 @@
+id,name,email,id_role,status_id,company_type_id,currency,app_version,legal_texts_version,pop_checked,tyc_checked,created_at,updated_at,deleted_at,active_company,active_department,custom_id,custom_id_2,custom_id_3,language,active,last_login_date,login_error_count,skip_sso,companies
+195605,USUARIO,user@roadtodata.com,3,2,1,1,,1,0,0,2025-04-23 06:55:00,2025-04-23 06:55:00,,,,,,,,True,,,0,73413
+195606,Administrador,admin@roadtodata.com,2,2,1,1,,1,0,0,2025-04-23 06:56:04,2025-05-19 10:52:33,,,,,,,,True,2025-05-19 10:52:33,0.0,0,73413
+195608,API,api@roadtodata.com,113,2,1,1,,1,0,0,2025-04-23 06:57:21,2025-04-23 06:57:21,,,,,,,,True,,,0,73413
+198268,Robert Cunningham,keith88@example.org,3,2,1,21,,1,0,0,2025-05-19 06:42:54,2025-05-19 06:42:54,,,,1234,1234,1234,,True,,,0,73413
+198269,Lawrence Shea,lhill@example.org,3,2,1,21,,1,0,0,2025-05-19 06:42:55,2025-05-19 06:42:55,,,,1234,1234,1234,,True,,,0,73413
+198270,Carlos Wagner,andersonjeffrey@example.net,3,2,1,21,,1,0,0,2025-05-19 06:42:55,2025-05-19 06:42:55,,,,1234,1234,1234,,True,,,0,73413
+198283,Sarah Russo,jschultz@example.net,3,2,1,21,,1,0,0,2025-05-19 06:46:24,2025-05-19 06:46:24,,,,1234,1234,1234,,True,,,0,73413
+198284,Jerome Brooks,edwardsjennifer@example.net,3,2,1,21,,1,0,0,2025-05-19 06:46:24,2025-05-19 06:46:24,,,,1234,1234,1234,,True,,,0,73413
+198285,Andrew Ferguson,richard43@example.com,3,2,1,21,,1,0,0,2025-05-19 06:46:25,2025-05-19 06:46:25,,,,1234,1234,1234,,True,,,0,73413
+198290,Gabrielle Bishop,lukelamb@example.org,3,2,1,21,,1,0,0,2025-05-19 07:27:07,2025-05-19 07:27:07,,,,1234,1234,1234,,True,,,0,73413
+198291,Kristen Jensen,tracey76@example.com,3,2,1,21,,1,0,0,2025-05-19 07:27:08,2025-05-19 07:27:08,,,,1234,1234,1234,,True,,,0,73413
+198292,Alice Barajas,angelacastillo@example.com,3,2,1,21,,1,0,0,2025-05-19 07:27:09,2025-05-19 07:27:09,,,,1234,1234,1234,,True,,,0,73413
+198286,Christopher Blanchard,vsweeney@example.net,3,2,1,21,,1,0,0,2025-05-19 06:46:26,2025-05-19 06:46:26,,,,1234,1234,1234,,True,,,0,73945
+198274,Vincent Mueller,qroberts@example.org,3,2,1,21,,1,0,0,2025-05-19 06:42:58,2025-05-19 06:42:58,,,,1234,1234,1234,,True,,,0,73946
+198275,Felicia Monroe,ryangreene@example.org,3,2,1,21,,1,0,0,2025-05-19 06:42:59,2025-05-19 06:42:59,,,,1234,1234,1234,,True,,,0,73946
+198276,Lisa Thomas,tiffany99@example.net,3,2,1,21,,1,0,0,2025-05-19 06:43:00,2025-05-19 06:43:00,,,,1234,1234,1234,,True,,,0,73946
+198287,Jesse Tanner IV,michael55@example.com,3,2,1,21,,1,0,0,2025-05-19 06:46:28,2025-05-19 06:46:28,,,,1234,1234,1234,,True,,,0,73946
+198280,Raymond Allen,xshaw@example.org,3,2,1,21,,1,0,0,2025-05-19 06:43:02,2025-05-19 06:43:02,,,,1234,1234,1234,,True,,,0,73948
+198281,Kari Richardson,emilyalvarez@example.com,3,2,1,21,,1,0,0,2025-05-19 06:43:03,2025-05-19 06:43:03,,,,1234,1234,1234,,True,,,0,73948
+198282,Antonio Wong,holly58@example.org,3,2,1,21,,1,0,0,2025-05-19 06:43:04,2025-05-19 06:43:04,,,,1234,1234,1234,,True,,,0,73948

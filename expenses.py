@@ -56,6 +56,22 @@ def get_gastos_by_date(token, fecha):
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
 
+def guardar_gasto_en_json(gasto):
+    fecha = datetime.now().strftime("%Y%m%d")
+    filename = f"expenses_{fecha}.json"
+
+    # Si existe, lo carga; si no, empieza una lista vacía
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        data = []
+
+    data.append(gasto)
+
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
 def create_gasto(token, company_id, user_id):
     load_dotenv()
     fake = Faker('es_ES')
@@ -111,6 +127,9 @@ def create_gasto(token, company_id, user_id):
         table.add_row("Comentario", data["comments"][:50] + ("..." if len(data["comments"]) > 50 else ""))
 
         rprint(table)
+
+        # Guardar el gasto completo en el JSON
+        guardar_gasto_en_json(data)
 
     except json.JSONDecodeError:
         context = "⚠️ Error: Respuesta no es un JSON válido"
