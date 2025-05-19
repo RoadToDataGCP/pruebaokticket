@@ -6,6 +6,10 @@ import datetime
 from faker import Faker
 import random
 from datetime import datetime
+from rich import print as rprint  # Necesitas instalar la librería `rich`
+from rich.panel import Panel
+from rich.table import Table
+from utils import log_error
 
 def get_gastos_by_empresa(token, empresa):
     load_dotenv()
@@ -52,12 +56,9 @@ def get_gastos_by_date(token, fecha):
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
 
-
-
-def create_gasto(token, company_id):
+def create_gasto(token, company_id, user_id):
     load_dotenv()
-    fake = Faker('es_ES')  # Localización en español
-
+    fake = Faker('es_ES')
     url = f"{os.getenv('HOST')}/api/expenses"
     
     headers = {
@@ -65,19 +66,16 @@ def create_gasto(token, company_id):
         'Content-Type': 'application/json'
     }
 
-    # Simulación de datos
-    user_id = str(random.randint(1000, 9999)) #Cambiar por un ID de usuario real, buscar a traves de la API.
     department_id = str(random.randint(10, 99))
     type_id = str(random.choice([0, 1, 2, 4]))
-    category_id = str(random.randint(1, 20))  # Asumimos que hay 20 categorías
+    category_id = str(random.randint(1, 20))
 
-    # Fecha en los últimos 30 días
     date = fake.date_time_between(start_date='-30d', end_date='now').strftime('%Y-%m-%d %H:%M:%S')
-    amount = round(random.uniform(10.00, 500.00), 2)  # Importe entre 10€ y 500€
-    name = fake.sentence(nb_words=3).rstrip('.')  # Nombre corto
+    amount = round(random.uniform(10.00, 500.00), 2)
+    name = fake.sentence(nb_words=3).rstrip('.')
     comments = fake.text(max_nb_chars=100)
 
-    payload = json.dumps({
+    payload = {
         "user_id": user_id,
         "company_id": company_id,
         "department_id": department_id,
@@ -88,18 +86,47 @@ def create_gasto(token, company_id):
         "amount": amount,
         "name": name,
         "comments": comments
-    })
+    }
 
-    response = requests.post(url, headers=headers, data=payload)
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
 
     try:
-        gastos = response.json()
-        print(json.dumps(gastos, indent=4, ensure_ascii=False))
+        data = response.json()["data"]
+
+        company_name = data["company"]["name"]
+        user_name = data["user"]["name"]
+        table = Table(title="✅ Gasto creado correctamente")
+
+        table.add_column("Campo", style="bold cyan")
+        table.add_column("Valor", style="green")
+
+        table.add_row("Usuario", user_name)
+        table.add_row("ID Usuario", str(data["user_id"]))
+        table.add_row("Empresa", company_name)
+        table.add_row("ID Empresa", str(data["company_id"]))
+        table.add_row("Nombre gasto", data["name"])
+        table.add_row("Fecha", data["date"])
+        table.add_row("Importe", f"{data['amount']} €")
+        table.add_row("Categoría ID", str(data["category_id"]))
+        table.add_row("Comentario", data["comments"][:50] + ("..." if len(data["comments"]) > 50 else ""))
+
+        rprint(table)
+
     except json.JSONDecodeError:
-        print("⚠️ Error: La respuesta no es un JSON válido")
-        print(response.text)
+        context = "⚠️ Error: Respuesta no es un JSON válido"
+        rprint(Panel.fit(
+            f"[red bold]{context}[/red bold]\n[white]Guardado en '{os.getenv('ERROR_LOG_FILE', 'errores_gastos.log')}'[/white]",
+            title="Respuesta inválida"
+        ))
+        log_error(response.text, context, payload)
 
-
+    except KeyError as e:
+        context = f"⚠️ Error: Campo faltante en JSON → {str(e)}"
+        rprint(Panel.fit(
+            f"[red bold]{context}[/red bold]\n[white]Guardado en '{os.getenv('ERROR_LOG_FILE', 'errores_gastos.log')}'[/white]",
+            title="Error de formato"
+        ))
+        log_error(response.text, context, payload)
 
 def get_gasto_by_id(token, gasto_id):
     load_dotenv()
@@ -119,3 +146,4 @@ def get_gasto_by_id(token, gasto_id):
     except json.JSONDecodeError:
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
+
