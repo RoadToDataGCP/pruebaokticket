@@ -48,7 +48,8 @@ def subir_expenses():
 
     #Subir a bucket
     bucket_name = "prueba-okticket"
-    subir_a_bucket(csv_file, bucket_name)
+    bucket_csv = "bucket-gastos"
+    subir_a_bucket(csv_file, bucket_name,bucket_csv)
     print(f"Archivo {filename} subido a {bucket_name}.")
 
     automatizar_carga_bigquery(
@@ -58,6 +59,21 @@ def subir_expenses():
     table_id="okticket_expenses_raw"
     )
 
+def subir_empresas():
+    bucket_name = "prueba-okticket"
+    bucket_csv = "bucket-companies"
+    empresas_file = f'empresas.csv'
+    subir_a_bucket(empresas_file,bucket_name,bucket_csv)
+
+    automatizar_carga_bigquery(
+    csv_path=empresas_file,
+    project_id="r2d-interno-dev",
+    dataset_id="raw_okticket",
+    table_id="okticket_companies_raw"
+    )
+    
+
 if __name__ == "__main__":
     main()
     subir_expenses()
+    subir_empresas()

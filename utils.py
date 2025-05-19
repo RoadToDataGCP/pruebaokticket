@@ -170,7 +170,7 @@ def convertir_json_a_csv_expenses(json_file, csv_file):
     print("El archivo JSON se ha convertido correctamente a CSV.")
 
 # Función para subir un archivo CSV a Google Cloud Storage
-def subir_a_bucket(csv_file_local, bucket_name):
+def subir_a_bucket(csv_file_local, bucket_name,bucket_csv):
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     # Crear la ruta de destino en el bucket
@@ -179,7 +179,7 @@ def subir_a_bucket(csv_file_local, bucket_name):
     # para evitar conflictos de nombres
     # y mantener la organización
     # de los archivos en el bucket
-    destination_blob_name = f"bucket-gastos/{today_date}/{csv_file_local.split('/')[-1]}"
+    destination_blob_name = f"{bucket_csv}/{today_date}/{csv_file_local.split('/')[-1]}"
 
     # Crear el cliente de Google Cloud Storage
     # y subir el archivo CSV
