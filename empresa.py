@@ -47,7 +47,7 @@ def verEmpresas():
   allEmpresas.to_csv(f'{current_path}/empresas.csv', index=False)
   return allEmpresas[['id','name','cif','fiscal_address','postal_code','city','contact_number','contact_email']]
 
-verEmpresas()
+#verEmpresas()
 
 def verEmpresa(id: int):
   url = f"https://apipre.okticket.es/v2/public/api/companies/{id}"
