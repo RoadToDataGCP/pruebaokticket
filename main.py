@@ -43,12 +43,12 @@ def subir_expenses():
     #Conversion de json de gastos a csv
     fecha = datetime.now().strftime("%Y%m%d")
     filename = f"expenses_{fecha}.json"
-    csv_file = f"expenses_{fecha}.csv"
+    csv_file = f"expenses.csv"
     convertir_json_a_csv_expenses(filename, csv_file)
 
     #Subir a bucket
-    bucket_name = "prueba-okticket/bucket-gastos"
-    subir_a_bucket(f"expenses_{fecha}.csv", bucket_name)
+    bucket_name = "prueba-okticket"
+    subir_a_bucket(csv_file, bucket_name)
     print(f"Archivo {filename} subido a {bucket_name}.")
 
     automatizar_carga_bigquery(

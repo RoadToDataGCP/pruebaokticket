@@ -179,7 +179,7 @@ def subir_a_bucket(csv_file_local, bucket_name):
     # para evitar conflictos de nombres
     # y mantener la organización
     # de los archivos en el bucket
-    destination_blob_name = f"output/{today_date}/{csv_file_local.split('/')[-1]}"
+    destination_blob_name = f"bucket-gastos/{today_date}/{csv_file_local.split('/')[-1]}"
 
     # Crear el cliente de Google Cloud Storage
     # y subir el archivo CSV
