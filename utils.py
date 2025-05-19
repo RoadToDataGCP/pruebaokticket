@@ -46,6 +46,8 @@ def crearCsvUsuarios(datos):
     datos = datos['data']
     listausuarios = list()
     for user in datos:
+        #companies = user.get("companies", [])
+        #company_id = companies[0]["id"] if companies else None  # Evita el error
         fila = {
             'id' : user['id'] , 
             'name': user['name'], 
@@ -149,7 +151,7 @@ def convertir_json_a_csv_expenses(json_file, csv_file):
         json_data = json.load(f)
 
     # Acceder a la lista de datos dentro de la clave "data"
-    data = json_data.get("data", [])
+    data = json_data
 
     if not data:
         print("No hay registros en la clave 'data'.")
@@ -170,7 +172,7 @@ def convertir_json_a_csv_expenses(json_file, csv_file):
 # Función para subir un archivo CSV a Google Cloud Storage
 def subir_a_bucket(csv_file_local, bucket_name):
 
-    today_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    today_date = datetime.now().strftime("%Y-%m-%d")
     # Crear la ruta de destino en el bucket
     # usando la fecha actual
     # y el nombre del archivo local

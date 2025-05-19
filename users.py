@@ -34,20 +34,19 @@ def createUser(nombreempresa, name, email, password, ids_companies, custom_id, c
     # Imprimir datos con formato legible
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
-def obtenerListaTotalUsuarios(nombreempresa):
-    url = f'{constantes.HOST}/api/users'
+def obtenerListaTotalUsuarios():
+    url = f'{constantes.HOST}/api/users?with=companies'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'company': nombreempresa
     }
 
     respuesta = rq.get(url, headers=headers)
     datos = controlErrores(respuesta)
-        # Imprimir datos con formato legible
-    print(json.dumps(datos, indent=4, ensure_ascii=False))
-    
+    # Imprimir datos con formato legible
+    return datos
+
 def obtenerMiUsuario():
     url = f'{constantes.HOST}/api/me?with=companies'
     headers = {

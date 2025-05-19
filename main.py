@@ -1,8 +1,7 @@
 from faker import Faker
 from obtenertoken import obtenerTokend
-import json
-from empresa import crearEmpresa, verEmpresas, borrarEmpresa
-from users import createUser, obtenerListaTotalEmpresas, obtenerListaTotalUsuarios, borrarUsuario
+from empresa import crearEmpresa, verEmpresas
+from users import createUser, obtenerListaTotalUsuarios
 from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios
 from expenses import create_gasto
 import constantes
@@ -10,6 +9,8 @@ from datetime import datetime
 
 def main():
 
+    # Crear una instancia de Faker
+    fake = Faker()
     # Obtener tocken 
     obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
@@ -35,6 +36,8 @@ def main():
         print(f"Creando gasto para la empresa {name} con ID {company_id} y usuario {user_id}")
         create_gasto(token, company_id, user_id)
 
+    datos = obtenerListaTotalUsuarios()
+    crearCsvUsuarios(datos)
 
 def subir_expenses():
     #Conversion de json de gastos a csv
@@ -57,6 +60,4 @@ def subir_expenses():
 
 if __name__ == "__main__":
     main()
-    datos = obtenerListaTotalUsuarios()
-    usuarios = crearCsvUsuarios(datos)
     subir_expenses()
