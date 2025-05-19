@@ -4,7 +4,6 @@ config {
   name: "stg_okticket_expenses"
 }
 
-CREATE TABLE staging_okticket.okticket_expenses_staging AS
 SELECT
     _id,
     CAST(amount AS NUMERIC) AS amount,
