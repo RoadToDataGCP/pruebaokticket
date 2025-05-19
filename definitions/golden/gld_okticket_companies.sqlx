@@ -5,4 +5,4 @@ config {
 }
 
 SELECT * FROM ${ref('stg_okticket_companies')}
-WHERE fecha NOT IN (SELECT fecha FROM `golden_okticket.gld_okticket_companies`)
+WHERE id NOT IN (SELECT id FROM `golden_okticket.gld_okticket_companies`)
