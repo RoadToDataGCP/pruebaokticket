@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "golden_okticket",
-    name: "gld_okticket_jrs",
+    name: "gld_okticket_expenses",
     uniqueKey: ["_id"]
 }
 
