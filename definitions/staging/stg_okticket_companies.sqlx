@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: "staging_aemet",
+  schema: "staging_okticket",
   name: "stg_okticket_companies"
 }
 

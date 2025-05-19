@@ -14,7 +14,7 @@ SELECT
   CAST(created_at AS TIMESTAMP) AS created_at,
   created_by,
   currency,
-  CAST(date AS DATE) AS date,
+  date,
   department_id,
   id,
   integrity_hash,
