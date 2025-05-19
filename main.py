@@ -1,44 +1,62 @@
 from faker import Faker
 from obtenertoken import obtenerTokend
+import json
 from empresa import crearEmpresa, verEmpresas, borrarEmpresa
 from users import createUser, obtenerListaTotalEmpresas, obtenerListaTotalUsuarios, borrarUsuario
-from utils import obtenernameid, obtenernameid2, obteneruseridempresaid, crearCsvUsuarios
-import json
+from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios
+from expenses import create_gasto
+import constantes
+from datetime import datetime
 
-fake = Faker()
+def main():
 
-# Obtener tocken 
-obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
+    # Obtener tocken 
+    obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
-"""
-#crearEmpresa()
-# Obtener lista de empresas
+    token = constantes.TOKEND
+    #crearEmpresa()
+    #Obtener lista de empresas
+    empresas = verEmpresas()
+    #print(empresas)
+    nameid = obtenernameid(empresas)
+    for empresa in nameid:
+        name = empresa["name"]
+        company_id = empresa["id"]
+        for _ in range(3):
+            print(f"Creando usuario para la empresa {name} con ID {company_id}")
+            # Crear usuario
+            #createUser(name, fake.name(), fake.email(), fake.password(), [company_id] , "1234", "1234", "1234")
 
-empresas = verEmpresas()
-nameid = obtenernameid(empresas)
+    relaciones = obtener_ids_users_companies(token)
 
-for empresa in nameid:
-    name = empresa["name"]
-    id = empresa["id"]
-    for _ in range(3):
-        createUser(name, fake.name(), fake.email(), fake.password(), [id] , "1234", "1234", "1234")
-
-for empresa in nameid:
-    name = empresa["name"]
-    id = empresa["id"]
-    borrarEmpresa(id, name)
-      
+    for relacion in relaciones:
+        user_id = relacion["id_user"]
+        company_id = relacion["id_company"]
+        print(f"Creando gasto para la empresa {name} con ID {company_id} y usuario {user_id}")
+        create_gasto(token, company_id, user_id)
 
 
-empresas = obtenerListaTotalEmpresas()
-nameid = obtenernameid2(empresas)
+def subir_expenses():
+    #Conversion de json de gastos a csv
+    fecha = datetime.now().strftime("%Y%m%d")
+    filename = f"expenses_{fecha}.json"
+    csv_file = f"expenses_{fecha}.csv"
+    convertir_json_a_csv_expenses(filename, csv_file)
 
-#print(json.dumps(nameid, indent=2))
+    #Subir a bucket
+    bucket_name = "bucket-gastos"
+    subir_a_bucket(f"expenses_{fecha}.csv", bucket_name)
+    print(f"Archivo {filename} subido a {bucket_name}.")
 
-usuarios = obtenerListaTotalUsuarios()
-useridempid = obteneruseridempresaid(usuarios)
-print(json.dumps(useridempid, indent=2))
-""" 
+    automatizar_carga_bigquery(
+    csv_path=csv_file,
+    project_id="r2d-interno-dev",
+    dataset_id="raw_okticket",
+    table_id="okticket_expenses_raw"
+    )
 
-datos = obtenerListaTotalUsuarios()
-usuarios = crearCsvUsuarios(datos)
+if __name__ == "__main__":
+    main()
+    datos = obtenerListaTotalUsuarios()
+    usuarios = crearCsvUsuarios(datos)
+    subir_expenses()

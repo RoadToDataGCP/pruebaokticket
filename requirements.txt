@@ -1,0 +1,6 @@
+requests
+dotenv
+tqdm
+faker
+pandas
+rich
