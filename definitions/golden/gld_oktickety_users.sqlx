@@ -1,0 +1,8 @@
+config {
+  type: "incremental",
+  schema: "golden_okticket",
+  name: "gld_okticket_users"
+}
+
+SELECT * FROM ${ref('stg_okticket_users')}
+WHERE id NOT IN (SELECT id FROM `golden_okticket.gld_okticket_users`)
