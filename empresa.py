@@ -68,7 +68,6 @@ def verEmpresa(id: int):
 #print(verEmpresa(73827))
 
 
-
 def verEmpresaCif(cif):
   url = f"https://apipre.okticket.es/v2/public/api/companies?cif={cif}"
   payload={}
@@ -102,7 +101,22 @@ def crearEmpresa():
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     datos = controlErrores(response)
-    
+
+def borrarEmpresa(idemp, nameemp):
+  url = f'{constantes.HOST}/api/companies/{idemp}'
+
+  payload = ""
+  headers = {
+    'Authorization': f'Bearer {constantes.TOKEND}',
+    'Accept': 'application/json',
+    'company': nameemp
+  }
+
+  response = requests.request("DELETE", url, headers=headers, data=payload)
+
+  datos = controlErrores(response)
+  return(datos)
+      
 
 
 
