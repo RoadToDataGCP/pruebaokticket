@@ -46,8 +46,6 @@ def verEmpresas():
 
   return allEmpresas[['id','name','cif','fiscal_address','postal_code','city','contact_number','contact_email']]
 
-#print(verEmpresas())
-
 
 def verEmpresa(id: int):
   url = f"https://apipre.okticket.es/v2/public/api/companies/{id}"
@@ -90,7 +88,7 @@ def verEmpresaCif(cif):
 
 def crearEmpresa():
   
-  empresas = pd.read_json("okticket/empresas.json")
+  empresas = pd.read_json("empresas.json")
   url = f'{constantes.HOST}/api/companies'
   for empresa in empresas.values:
   

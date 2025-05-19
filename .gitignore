@@ -1,2 +1,13 @@
+# Ignorar el directorio __pycache__ (archivos compilados de Python)
+__pycache__/
+
+# Ignorar archivos .csv, .json y .log
+*.csv
+*.json
+*.log
+
+# Ignorar el directorio venv (virtual environment)
+venv/
+
 oktickethelena/__pycache__/
 OK TICKET - Documentación/
