@@ -35,7 +35,7 @@ def main():
 
 
 def subir_expenses():
-        #Conversion de json de gastos a csv
+    #Conversion de json de gastos a csv
     fecha = datetime.now().strftime("%Y%m%d")
     filename = f"expenses_{fecha}.json"
     csv_file = f"expenses_{fecha}.csv"
