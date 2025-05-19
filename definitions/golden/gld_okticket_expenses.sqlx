@@ -4,3 +4,5 @@ config {
     name: "gld_okticket_expenses",
     uniqueKey: ["_id"]
 }
+
+SELECT * from ${ref('stg_okticket_expenses')}
