@@ -1,11 +1,13 @@
 from faker import Faker
 from obtenertoken import obtenerTokend
-from empresa import crearEmpresa, verEmpresas
-from users import createUser
-from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery
+import json
+from empresa import crearEmpresa, verEmpresas, borrarEmpresa
+from users import createUser, obtenerListaTotalEmpresas, obtenerListaTotalUsuarios, borrarUsuario
+from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios
 from expenses import create_gasto
 import constantes
 from datetime import datetime
+
 def main():
 
     # Obtener tocken 
@@ -55,4 +57,6 @@ def subir_expenses():
 
 if __name__ == "__main__":
     main()
+    datos = obtenerListaTotalUsuarios()
+    usuarios = crearCsvUsuarios(datos)
     subir_expenses()
