@@ -47,7 +47,7 @@ def subir_expenses():
     convertir_json_a_csv_expenses(filename, csv_file)
 
     #Subir a bucket
-    bucket_name = "bucket-gastos"
+    bucket_name = "prueba-okticket/bucket-gastos"
     subir_a_bucket(f"expenses_{fecha}.csv", bucket_name)
     print(f"Archivo {filename} subido a {bucket_name}.")
 
