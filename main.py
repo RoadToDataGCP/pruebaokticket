@@ -2,11 +2,11 @@ from faker import Faker
 from obtenertoken import obtenerTokend
 from empresa import crearEmpresa, verEmpresas
 from users import createUser
-from utils import obtenernameid, obtener_ids_users_companies
+from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery
 from expenses import create_gasto
 import constantes
+from datetime import datetime
 def main():
-    fake = Faker()
 
     # Obtener tocken 
     obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
@@ -34,5 +34,25 @@ def main():
         create_gasto(token, company_id, user_id)
 
 
+def subir_expenses():
+    #Conversion de json de gastos a csv
+    fecha = datetime.now().strftime("%Y%m%d")
+    filename = f"expenses_{fecha}.json"
+    csv_file = f"expenses_{fecha}.csv"
+    convertir_json_a_csv_expenses(filename, csv_file)
+
+    #Subir a bucket
+    bucket_name = "bucket-gastos"
+    subir_a_bucket(f"expenses_{fecha}.csv", bucket_name)
+    print(f"Archivo {filename} subido a {bucket_name}.")
+
+    automatizar_carga_bigquery(
+    csv_path=csv_file,
+    project_id="r2d-interno-dev",
+    dataset_id="raw_okticket",
+    table_id="okticket_expenses_raw"
+    )
+
 if __name__ == "__main__":
     main()
+    subir_expenses()
