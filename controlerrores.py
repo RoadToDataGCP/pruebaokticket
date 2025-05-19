@@ -4,6 +4,8 @@ def controlErrores(respuesta):
             return respuesta.json()
         elif respuesta.status_code == 201:
             return respuesta.json()
+        elif respuesta.status_code == 204:
+            print("El ususario se ha borrado con exito")
         # Trata de errores 
         elif respuesta.status_code == 400:
             print("Error 400: petición erronea")
@@ -11,7 +13,7 @@ def controlErrores(respuesta):
         elif respuesta.status_code == 401:
             print("Error 401: no tienes autorización")
         elif respuesta.status_code == 403:
-            print("Error 403: no tines permisos")
+            print("Error 403: no tienes permisos")
         elif respuesta.status_code == 404:
             print("Error 404: endpoint erroneo")
         elif respuesta.status_code == 405:
