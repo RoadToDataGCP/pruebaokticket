@@ -1,5 +1,5 @@
 config {
   type: "declaration",
   schema: "raw_okticket",
-  name: "okticket_users_raw",
+  name: "okticket_companies_raw",
 }

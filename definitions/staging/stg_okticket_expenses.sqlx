@@ -5,26 +5,26 @@ config {
 }
 
 SELECT
-    _id,
-    CAST(amount AS NUMERIC) AS amount,
-    category_id,
-    comments,
-    JSON_EXTRACT_SCALAR(company, '$.name') AS company_name,
-    company_id,
-    CAST(created_at AS TIMESTAMP) AS created_at,
-    created_by,
-    currency,
-    CAST(date AS DATE) AS date,
-    department_id,
-    id,
-    integrity_hash,
-    name,
-    source,
-    status_id,
-    tax_model_id,
-    type_id,
-    CAST(updated_at AS TIMESTAMP) AS updated_at,
-    JSON_EXTRACT_SCALAR(user, '$.name') AS user_name,
-    user_id
+  _id,
+  CAST(amount AS NUMERIC) AS amount,
+  category_id,
+  comments,
+  JSON_EXTRACT_SCALAR(company, '$.name') AS company_name,
+  company_id,
+  CAST(created_at AS TIMESTAMP) AS created_at,
+  created_by,
+  currency,
+  CAST(date AS DATE) AS date,
+  department_id,
+  id,
+  integrity_hash,
+  name,
+  source,
+  status_id,
+  tax_model_id,
+  type_id,
+  CAST(updated_at AS TIMESTAMP) AS updated_at,
+  JSON_EXTRACT_SCALAR(user, '$.name') AS user_name,
+  user_id
 FROM
-    ${ref('okticket_expenses_raw')}
+  ${ref('okticket_expenses_raw')}

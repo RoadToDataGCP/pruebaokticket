@@ -1,0 +1,36 @@
+config {
+  type: "table",
+  schema: "staging_okticket",
+  name: "stg_okticket_users",
+}
+
+SELECT
+  CAST(id AS INT64) AS id,
+  name,
+  email,
+  CAST(id_role AS INT64) AS id_role,
+  CAST(status_id AS INT64) AS status_id,
+  CAST(company_type_id AS INT64) AS company_type_id,
+  currency,
+  app_version,
+  CAST(legal_texts_version AS INT64) AS legal_texts_version,
+  CAST(pop_checked AS BOOL) AS pop_checked,
+  CAST(tyc_checked AS BOOL) AS tyc_checked,
+  CAST(created_at AS DATETIME) AS created_at,
+  CAST(updated_at AS DATETIME) AS updated_at,
+  CAST(deleted_at AS DATETIME) AS deleted_at,
+  CAST(active_company AS INT64) AS active_company,
+  CAST(active_department AS INT64) AS active_department,
+  custom_id,
+  custom_id_2,
+  custom_id_3,
+  language,
+  CAST(active AS BOOL) AS active,
+  CAST(last_login_date AS DATETIME) AS last_login_date,
+  CAST(login_error_count AS FLOAT64) AS login_error_count,
+  CAST(skip_sso AS BOOL) AS skip_sso,
+  CAST(companies AS INT64) AS companies
+FROM ${ref('okticket_users_raw')}
+
+
+

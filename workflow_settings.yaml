@@ -1,5 +1,5 @@
 defaultProject: r2d-interno-dev
-defaultLocation: EU
+defaultLocation: europe-west1
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
