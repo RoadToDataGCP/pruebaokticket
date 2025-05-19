@@ -4,24 +4,3 @@ config {
     name: "gld_okticket_expenses",
     uniqueKey: ["_id"]
 }
-
-
-IF
-  is_incremental()
-THEN
-  SELECT
-    *
-  FROM
-    `r2d-interno-dev.staging_okticket.stg_okticket_expenses`
-  WHERE
-    fecha > (
-    SELECT
-      MAX(fecha)
-    FROM
-      `r2d-interno-dev.golden_okticket.gld_okticket_expenses`);
-ELSE 
-  SELECT
-    *
-  FROM
-    `r2d-interno-dev.staging_okticket.stg_okticket_expenses`;
-END IF
