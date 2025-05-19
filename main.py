@@ -15,7 +15,7 @@ def main():
     obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
     token = constantes.TOKEND
-    #crearEmpresa()
+    crearEmpresa()
     #Obtener lista de empresas
     empresas = verEmpresas()
     #print(empresas)
@@ -26,7 +26,7 @@ def main():
         for _ in range(3):
             print(f"Creando usuario para la empresa {name} con ID {company_id}")
             # Crear usuario
-            #createUser(name, fake.name(), fake.email(), fake.password(), [company_id] , "1234", "1234", "1234")
+            createUser(name, fake.name(), fake.email(), fake.password(), [company_id] , "1234", "1234", "1234")
 
     relaciones = obtener_ids_users_companies(token)
 
