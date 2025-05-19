@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "raw_okticket",
+  name: "okticket_expenses_raw",
+}
