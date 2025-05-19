@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import constantes
 from controlerrores import controlErrores
+import os
 
 def autUser():
   url = "https://apipre.okticket.es/v2/public/oauth/token"
@@ -37,15 +38,16 @@ def verEmpresas():
   }
   
   response = requests.request("GET", url, headers=headers, data=payload)
-  
+  current_path = os.path.dirname(os.path.abspath(__file__))
   data = response.json()
   df = pd.json_normalize(data)
   empresas = pd.json_normalize(df["data"])
   empresasT = empresas.T.reset_index()
   allEmpresas = pd.json_normalize(empresasT[0])
-
+  allEmpresas.to_csv(f'{current_path}/empresas.csv', index=False)
   return allEmpresas[['id','name','cif','fiscal_address','postal_code','city','contact_number','contact_email']]
 
+#verEmpresas()
 
 def verEmpresa(id: int):
   url = f"https://apipre.okticket.es/v2/public/api/companies/{id}"
