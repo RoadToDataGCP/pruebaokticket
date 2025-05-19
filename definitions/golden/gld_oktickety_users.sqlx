@@ -4,5 +4,4 @@ config {
   name: "gld_okticket_users"
 }
 
-SELECT * FROM `r2d-interno-dev.golden_okticket.gld_okticket_users`
-WHERE id NOT IN (SELECT id FROM `golden_okticket.gld_okticket_users`)
+SELECT * FROM ${ref('stg_okticket_users')}

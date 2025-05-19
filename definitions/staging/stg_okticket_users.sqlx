@@ -14,8 +14,8 @@ SELECT
   currency,
   app_version,
   CAST(legal_texts_version AS INT64) AS legal_texts_version,
-  CAST(pop_checked AS BOOL) AS pop_checked,
-  CAST(tyc_checked AS BOOL) AS tyc_checked,
+  CAST(pop_checked AS INT64) AS pop_checked,
+  CAST(tyc_checked AS INT64) AS tyc_checked,
   CAST(created_at AS DATETIME) AS created_at,
   CAST(updated_at AS DATETIME) AS updated_at,
   CAST(deleted_at AS DATETIME) AS deleted_at,
@@ -25,10 +25,10 @@ SELECT
   custom_id_2,
   custom_id_3,
   language,
-  CAST(active AS BOOL) AS active,
+  active,
   CAST(last_login_date AS DATETIME) AS last_login_date,
   CAST(login_error_count AS FLOAT64) AS login_error_count,
-  CAST(skip_sso AS BOOL) AS skip_sso,
+  CAST(skip_sso AS INT64) AS skip_sso,
   CAST(companies AS INT64) AS companies
 FROM ${ref('okticket_users_raw')}
 
