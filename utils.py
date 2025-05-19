@@ -170,8 +170,8 @@ def convertir_json_a_csv_expenses(json_file, csv_file):
     print("El archivo JSON se ha convertido correctamente a CSV.")
 
 # Función para subir un archivo CSV a Google Cloud Storage
-def subir_a_bucket(csv_file_local, bucket_name,bucket_csv):
 
+def subir_a_bucket(csv_file_local, bucket_name,bucket_csv):
     today_date = datetime.now().strftime("%Y-%m-%d")
     # Crear la ruta de destino en el bucket
     # usando la fecha actual
