@@ -2,7 +2,7 @@ from faker import Faker
 from obtenertoken import obtenerTokend
 from empresa import crearEmpresa, verEmpresas, borrarEmpresa
 from users import createUser, obtenerListaTotalEmpresas, obtenerListaTotalUsuarios, borrarUsuario
-from utils import obtenernameid, obtenernameid2, obteneruseridempresaid
+from utils import obtenernameid, obtenernameid2, obteneruseridempresaid, crearCsvUsuarios
 import json
 
 fake = Faker()
@@ -10,12 +10,13 @@ fake = Faker()
 # Obtener tocken 
 obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
+"""
 #crearEmpresa()
 # Obtener lista de empresas
 
 empresas = verEmpresas()
 nameid = obtenernameid(empresas)
-"""
+
 for empresa in nameid:
     name = empresa["name"]
     id = empresa["id"]
@@ -39,4 +40,5 @@ useridempid = obteneruseridempresaid(usuarios)
 print(json.dumps(useridempid, indent=2))
 """ 
 
-borrarUsuario(198273)
+datos = obtenerListaTotalUsuarios()
+usuarios = crearCsvUsuarios(datos)
