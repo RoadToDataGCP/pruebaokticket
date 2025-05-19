@@ -33,7 +33,7 @@ def verEmpresas():
 
   payload={}
   headers = {
-    'Authorization': f'Bearer {autUser()}',
+    'Authorization': f'Bearer {constantes.TOKEND}',
     'Accept': 'application/json'
   }
   
