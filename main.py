@@ -71,7 +71,7 @@ def subir_empresas():
     table_id="okticket_companies_raw"
     )
 
-def subir_empresas():
+def subir_users():
     bucket_name = "prueba-okticket"
     bucket_csv = "bucket-users"
     empresas_file = f'usuarios.csv'
@@ -89,6 +89,6 @@ if __name__ == "__main__":
     main()
     subir_expenses()
     subir_empresas()
-    subir_empresas()
+    subir_users()
 
 
