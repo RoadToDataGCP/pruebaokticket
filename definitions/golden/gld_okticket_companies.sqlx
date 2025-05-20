@@ -1,8 +1,13 @@
 config {
   type: "incremental",
   schema: "golden_okticket",
-  name: "gld_okticket_companies"
+  name: "gld_okticket_companies",
+  uniqueKey: ["id"]
 }
 
-
-SELECT * FROM ${ref('stg_okticket_companies')}
+SELECT * 
+FROM ${ref('stg_okticket_companies')}
+WHERE id NOT IN (
+  SELECT id FROM `golden_okticket.INFORMATION_SCHEMA.TABLES`
+  WHERE table_name = 'gld_okticket_companies'
+)
