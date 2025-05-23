@@ -1,4 +1,4 @@
-def controlErrores(respuesta):
+def control_errores(respuesta):
     try:
         if respuesta.status_code == 200:
             return respuesta.json()

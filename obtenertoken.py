@@ -1,37 +1,41 @@
 import constantes
 import requests as rq
-from controlerrores import controlErrores
+from controlerrores import control_errores
+import os
+from dotenv import load_dotenv
 
-def obtenerTokend(client_id, client_secret, username, password):
-    url = f'{constantes.HOST}/oauth/token'
+def obtener_tokend():
+    load_dotenv()
+    url = f'{os.getenv('HOST')}/oauth/token'
     payload = {
         "grant_type": "password",
-        "client_id": client_id,
-        "client_secret": client_secret,
-        "username": username,
-        "password": password,
-        "scope": "*"
+        "client_id": os.getenv("CLIENT_ID"),
+        "client_secret": os.getenv("CLIENT_SECRET"),
+        "username": os.getenv("OKTICKET_USERNAME"),
+        "password": os.getenv("OKTICKET_PASSWORD"),
+        "scope": os.getenv("SCOPE")
     }
     files=[]
     headers = {}
     respuesta = rq.post(url,headers=headers, data=payload, files=files)
-    datos = controlErrores(respuesta)
+    datos = control_errores(respuesta)
     constantes.TOKEND = datos['access_token']
     constantes.REFRESHTOKEND = datos['refresh_token']
 
-def refrescarTokend(client_id, client_secret, refreshtokend):
-    url = f'{constantes.HOST}/oauth/token'
+def refrescar_tokend():
+    load_dotenv()
+    url = f'{os.getenv('HOST')}/oauth/token'
     payload = {
         "grant_type": "refresh_token",
-        "refresh_token": refreshtokend,
-        "client_id": client_id,
-        "client_secret": client_secret,
-        "scope": "*"
+        "refresh_token": constantes.REFRESHTOKEND,
+        "client_id": os.getenv("CLIENT_ID"),
+        "client_secret": os.getenv("CLIENT_SECRET"),
+        "scope": os.getenv("SCOPE")
     }
     files=[]
     headers = {}
     respuesta = rq.post(url,headers=headers, data=payload, files=files)
-    datos = controlErrores(respuesta)
+    datos = control_errores(respuesta)
     constantes.TOKEND = datos['access_token']
     constantes.REFRESHTOKEND = datos['refresh_token']
    
