@@ -173,5 +173,3 @@ def mostrarDeparts():
   dfTt = dfT.T.reset_index()
   normalizado = pd.json_normalize(dfTt[0])
   print(normalizado)
-
-mostrarDeparts()
