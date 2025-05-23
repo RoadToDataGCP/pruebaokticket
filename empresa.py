@@ -4,6 +4,9 @@ import pandas as pd
 import constantes
 from controlerrores import controlErrores
 import os
+from faker import Faker
+import random
+import string
 
 def autUser():
   url = "https://apipre.okticket.es/v2/public/oauth/token"
@@ -87,13 +90,20 @@ def verEmpresaCif(cif):
 
 #print(verEmpresaCif('E112233445'))
 
+def generarCifRandom():
+    first_letter = random.choice("ABCDEFGHJNPQRSUVW")
+    digits = ''.join(random.choices(string.digits, k=7))
+    control_char = random.choice(string.digits + string.ascii_uppercase)
+    cif = f"{first_letter}{digits}{control_char}"
+    return cif
+
+
 def crearEmpresa():
   
-  empresas = pd.read_json("empresas.json")
+  fake = Faker('es_ES')
   url = f'{constantes.HOST}/api/companies'
-  for empresa in empresas.values:
-  
-    payload=f'cif={empresa[0]}&name={empresa[1]}&fiscal_address={empresa[2]}&postal_code={empresa[3]}&city={empresa[4]}&contact_number={empresa[5]}&contact_email={empresa[6]}&language={empresa[7]}'
+  for _ in range(5):
+    payload=f'cif={generarCifRandom()}&name={fake.company()}&fiscal_address={fake.address()}&postal_code={fake.postal_code()}&city={fake.city()}&contact_number={fake.phone_number()}&contact_email={fake.company_email()}&language=ES'
     headers = {
       'Authorization': f'Bearer {constantes.TOKEND}',
       'Accept': 'application/json',
@@ -118,7 +128,50 @@ def borrarEmpresa(idemp, nameemp):
   return(datos)
       
 
-
-
-
 #crearEmpresa()
+
+
+
+departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
+conste = autUser()
+def crearDepartamento():
+  url='https://apipre.okticket.es/v2/public/api/departments'
+
+  for depart in departamentos:
+    payload = json.dumps({
+      "name": f"{depart}",
+      "company_id": 73413
+    })
+    headers = {
+      'Authorization': f'Bearer {conste}',
+      'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+  print('Todo Ok')
+
+
+
+#crearDepartamento()
+
+
+def mostrarDeparts():
+  url='https://apipre.okticket.es/v2/public/api/departments'
+
+  payload = json.dumps({
+
+  })
+  headers = {
+    'Authorization': f'Bearer {autUser()}',
+    'Content-Type': 'application/json'
+  }
+
+  response = requests.request("GET", url, headers=headers, data=payload)
+  data  = response.json()
+  df = pd.json_normalize(data)
+  dfT  = pd.json_normalize(df['data'])
+  dfTt = dfT.T.reset_index()
+  normalizado = pd.json_normalize(dfTt[0])
+  print(normalizado)
+
+mostrarDeparts()
