@@ -15,7 +15,7 @@ def main():
     obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
 
     token = constantes.TOKEND
-    #crearEmpresa()
+    crearEmpresa()
     #Obtener lista de empresas
     empresas = verEmpresas()
     #print(empresas)
@@ -26,7 +26,7 @@ def main():
         for _ in range(3):
             print(f"Creando usuario para la empresa {name} con ID {company_id}")
             # Crear usuario
-            #createUser(name, fake.name(), fake.email(), fake.password(), [company_id] , "1234", "1234", "1234")
+            createUser(name, fake.name(), fake.email(), fake.password(), [company_id] , "1234", "1234", "1234")
 
     relaciones = obtener_ids_users_companies(token)
 
@@ -58,7 +58,6 @@ def subir_expenses():
     dataset_id="raw_okticket",
     table_id="okticket_expenses_raw"
     )
-
 def subir_empresas():
     bucket_name = "prueba-okticket"
     bucket_csv = "bucket-companies"
@@ -71,9 +70,25 @@ def subir_empresas():
     dataset_id="raw_okticket",
     table_id="okticket_companies_raw"
     )
-    
+
+def subir_users():
+    bucket_name = "prueba-okticket"
+    bucket_csv = "bucket-users"
+    empresas_file = f'usuarios.csv'
+    subir_a_bucket(empresas_file,bucket_name,bucket_csv)
+
+    automatizar_carga_bigquery(
+    csv_path=empresas_file,
+    project_id="r2d-interno-dev",
+    dataset_id="raw_okticket",
+    table_id="okticket_users_raw"
+    )
+
 
 if __name__ == "__main__":
     main()
     subir_expenses()
     subir_empresas()
+    subir_users()
+
+
