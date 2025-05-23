@@ -131,7 +131,6 @@ def borrarEmpresa(idemp, nameemp):
 #crearEmpresa()
 
 
-
 departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
 conste = autUser()
 def crearDepartamento():
