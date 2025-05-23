@@ -47,6 +47,17 @@ def obtenerListaTotalUsuarios():
     # Imprimir datos con formato legible
     return datos
 
+def asociar_usuario_a_dept(iduser):
+    url = f'{constantes.HOST}/api/departments/'
+    headers = {
+        'Authorization': f'Bearer {constantes.TOKEND}',
+        'Content-Type': 'application/json',
+    }
+    respuesta = rq.get(url, headers=headers)
+    datos = controlErrores(respuesta)
+    # Imprimir datos con formato legible
+    return datos
+
 def obtenerMiUsuario():
     url = f'{constantes.HOST}/api/me?with=companies'
     headers = {
