@@ -131,8 +131,8 @@ def borrarEmpresa(idemp, nameemp):
 #crearEmpresa()
 
 
-departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
 
+departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
 conste = autUser()
 def crearDepartamento():
   url='https://apipre.okticket.es/v2/public/api/departments'
