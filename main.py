@@ -2,7 +2,7 @@ from faker import Faker
 from obtenertoken import obtenerTokend
 from empresa import crearEmpresa, verEmpresas
 from users import createUser, obtenerListaTotalUsuarios
-from utils import obtenernameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios
+from utils import obtener_nameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios
 from expenses import create_gasto
 import constantes
 from datetime import datetime
@@ -19,7 +19,7 @@ def main():
     #Obtener lista de empresas
     empresas = verEmpresas()
     #print(empresas)
-    nameid = obtenernameid(empresas)
+    nameid = obtener_nameid(empresas)
     for empresa in nameid:
         name = empresa["name"]
         company_id = empresa["id"]

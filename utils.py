@@ -14,7 +14,7 @@ from google.cloud import storage
 from google.cloud import bigquery
 import logging
 
-def obtenernameid(empresas):
+def obtener_nameid(empresas):
     nombreid = list()
     for _, empresa in empresas.iterrows():
         nombreid1 = {
@@ -29,7 +29,7 @@ def espera_con_barra(segundos: int, mensaje: str = "Esperando"):
     for _ in tqdm(range(segundos), desc=f"⏳ {mensaje} - {hilo}", ncols=150):
         time.sleep(1)
 
-def obteneruseridempresaid(usuarios):
+def obtener_userid_empresaid(usuarios):
     useridempid = list()
     listausuarios= usuarios['data']
     for user in listausuarios:
