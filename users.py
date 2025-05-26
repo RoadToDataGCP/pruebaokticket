@@ -2,10 +2,14 @@ import constantes
 import requests as rq
 from controlerrores import controlErrores
 import json
+import os
 import pandas as pd
+from dotenv import load_dotenv
 
+load_dotenv()
+host = os.getenv("HOST")
 def createUser(nombreempresa, name, email, password, ids_companies, custom_id, custom_id2, custom_id3):
-    url = f'{constantes.HOST}/api/users'
+    url = f'{host}/api/users'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -33,7 +37,8 @@ def createUser(nombreempresa, name, email, password, ids_companies, custom_id, c
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
 def obtenerListaTotalUsuarios():
-    url = f'{constantes.HOST}/api/users?with=companies'
+    
+    url = f'{host}/api/users?with=companies'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -47,7 +52,7 @@ def obtenerListaTotalUsuarios():
 
 
 def listado_email_users_de_empresa(idcompay):
-  url = f'{constantes.HOST}/api/companies/{idcompay}/users'
+  url = f'{host}/api/companies/{idcompay}/users'
   headers = {
       'Authorization': f'Bearer {constantes.TOKEND}',
       'Accept': 'application/json',
@@ -69,7 +74,7 @@ def listado_email_users_de_empresa(idcompay):
   return listausers
 
 def asociar_usuario_a_dept(iduser,emailuser, idcompany, iddept):
-    url = f'{constantes.HOST}/api/users/{iduser}'
+    url = f'{host}/api/users/{iduser}'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
     }
@@ -93,7 +98,7 @@ def asociar_usuario_a_dept(iduser,emailuser, idcompany, iddept):
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
 def obtenerMiUsuario():
-    url = f'{constantes.HOST}/api/me?with=companies'
+    url = f'{host}/api/me?with=companies'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json'
@@ -104,7 +109,7 @@ def obtenerMiUsuario():
     print(json.dumps(datos))
 
 def borrarUusuario(nombreempresa, name, email, password):
-    url = f'{constantes.HOST}/api/me?with=companies'
+    url = f'{host}/api/me?with=companies'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -119,3 +124,6 @@ def borrarUusuario(nombreempresa, name, email, password):
     respuesta = rq.delete(url, headers=headers, json=payload)
     datos = controlErrores(respuesta)
     print(json.dumps(datos))
+
+
+print(host)
