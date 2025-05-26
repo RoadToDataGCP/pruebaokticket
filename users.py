@@ -4,8 +4,6 @@ from controlerrores import controlErrores
 import json
 import pandas as pd
 
-name = ['Javi', 'Giorgio', 'Helena', 'Victor', 'Pablo', 'Hector', 'Alberto', 'Pecha', 'Daniel']
-
 def createUser(nombreempresa, name, email, password, ids_companies, custom_id, custom_id2, custom_id3):
     url = f'{constantes.HOST}/api/users'
     headers = {
