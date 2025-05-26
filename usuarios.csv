@@ -1,5 +1,7 @@
 id,name,email,id_role,status_id,company_type_id,currency,app_version,legal_texts_version,pop_checked,tyc_checked,created_at,updated_at,deleted_at,active_company,active_department,custom_id,custom_id_2,custom_id_3,language,active,last_login_date,login_error_count,skip_sso,companies
 195605,USUARIO,user@roadtodata.com,3,2,1,1,,1,0,0,2025-04-23 06:55:00,2025-04-23 06:55:00,,,,,,,,True,,,0,73413
-195606,Administrador,admin@roadtodata.com,2,2,1,1,,1,0,0,2025-04-23 06:56:04,2025-05-26 08:23:19,,,,,,,,True,2025-05-26 08:23:19,0.0,0,73413
+195606,Administrador,admin@roadtodata.com,2,2,1,1,,1,0,0,2025-04-23 06:56:04,2025-05-26 09:06:31,,,,,,,,True,2025-05-26 09:06:31,0.0,0,73413
 195608,API,api@roadtodata.com,113,2,1,1,,1,0,0,2025-04-23 06:57:21,2025-04-23 06:57:21,,,,,,,,True,,,0,73413
-198761,gio,gioo@correo.com,3,2,1,21,,1,0,0,2025-05-23 10:30:38,2025-05-23 10:30:38,,,,12345,hola2,hola3,,True,,,0,73413
+198761,gio,gioo@correo.com,3,2,1,21,,1,0,0,2025-05-23 10:30:38,2025-05-26 07:58:14,,,,12345,hola2,hola3,,True,,0.0,0,73413
+198868,helena,helena23@correo.com,3,2,1,21,,1,0,0,2025-05-26 07:39:38,2025-05-26 07:55:22,,,,12345,hola2,hola3,,True,,,0,73413
+198872,helena,helena40@correo.com,3,2,1,21,,1,0,0,2025-05-26 08:04:38,2025-05-26 08:13:38,,,,12345,hola2,hola3,,True,,,0,73413

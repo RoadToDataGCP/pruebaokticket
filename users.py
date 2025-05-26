@@ -124,6 +124,3 @@ def borrarUusuario(nombreempresa, name, email, password):
     respuesta = rq.delete(url, headers=headers, json=payload)
     datos = controlErrores(respuesta)
     print(json.dumps(datos))
-
-
-print(host)
