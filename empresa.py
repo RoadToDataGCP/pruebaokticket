@@ -131,7 +131,6 @@ def borrarEmpresa(idemp, nameemp):
 #crearEmpresa()
 
 
-
 departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
 conste = autUser()
 def crearDepartamento():
@@ -173,3 +172,4 @@ def mostrarDeparts():
   dfTt = dfT.T.reset_index()
   normalizado = pd.json_normalize(dfTt[0])
   print(normalizado)
+  return (normalizado)

@@ -166,3 +166,4 @@ def get_gasto_by_id(token, gasto_id):
         print("⚠️ Error: La respuesta no es un JSON válido")
         print(response.text)
 
+# 

@@ -24,6 +24,16 @@ def obtener_nameid(empresas):
         nombreid.append(nombreid1)
     return nombreid
 
+def obtener_deptid_empid(departamentos):
+    nombreid = list()
+    for _, empresa in departamentos.iterrows():
+        nombreid1 = {
+            'id_dept': empresa["id"],
+            'id_emp': empresa["company_id"]
+        }
+        nombreid.append(nombreid1)
+    return nombreid
+
 def espera_con_barra(segundos: int, mensaje: str = "Esperando"):
     hilo = threading.current_thread().name
     for _ in tqdm(range(segundos), desc=f"⏳ {mensaje} - {hilo}", ncols=150):
