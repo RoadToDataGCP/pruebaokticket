@@ -7,9 +7,12 @@ import os
 from faker import Faker
 import random
 import string
+from dotenv import load_dotenv
 
+load_dotenv()
+host = os.getenv("HOST")
 def autUser():
-  url = "https://apipre.okticket.es/v2/public/oauth/token"
+  url = f"{host}/oauth/token"
 
 
   payload={'grant_type': 'password',
@@ -32,7 +35,7 @@ def autUser():
 
 
 def verEmpresas():
-  url = "https://apipre.okticket.es/v2/public/api/companies"
+  url = f"{host}/api/companies"
 
   payload={}
   headers = {
@@ -50,10 +53,10 @@ def verEmpresas():
   allEmpresas.to_csv(f'{current_path}/empresas.csv', index=False)
   return allEmpresas
 
-print(verEmpresas())
+#print(verEmpresas())
 
 def verEmpresa(id: int):
-  url = f"https://apipre.okticket.es/v2/public/api/companies/{id}"
+  url = f"{host}/api/companies/{id}"
 
   payload={}
   headers = {
@@ -72,7 +75,7 @@ def verEmpresa(id: int):
 
 
 def verEmpresaCif(cif):
-  url = f"https://apipre.okticket.es/v2/public/api/companies?cif={cif}"
+  url = f"{host}/api/companies?cif={cif}"
   payload={}
   headers = {
     'Authorization': f'Bearer {autUser()}',
@@ -101,7 +104,7 @@ def generarCifRandom():
 def crearEmpresa():
   
   fake = Faker('es_ES')
-  url = f'{constantes.HOST}/api/companies'
+  url = f'{host}/api/companies'
   for _ in range(5):
     payload=f'cif={generarCifRandom()}&name={fake.company()}&fiscal_address={fake.address()}&postal_code={fake.postal_code()}&city={fake.city()}&contact_number={fake.phone_number()}&contact_email={fake.company_email()}&language=ES'
     headers = {
@@ -113,7 +116,7 @@ def crearEmpresa():
     datos = controlErrores(response)
 
 def borrarEmpresa(idemp, nameemp):
-  url = f'{constantes.HOST}/api/companies/{idemp}'
+  url = f'{host}/api/companies/{idemp}'
 
   payload = ""
   headers = {
@@ -134,7 +137,7 @@ def borrarEmpresa(idemp, nameemp):
 departamentos = ['Marketing y Comunicación','Recursos Humanos','Ventas y Desarrollo de Negocio']
 conste = autUser()
 def crearDepartamento():
-  url='https://apipre.okticket.es/v2/public/api/departments'
+  url=f'{host}/api/departments'
 
   for depart in departamentos:
     payload = json.dumps({
@@ -155,7 +158,7 @@ def crearDepartamento():
 
 
 def mostrarDeparts():
-  url='https://apipre.okticket.es/v2/public/api/departments'
+  url=f'{host}/api/departments'
 
   payload = json.dumps({
 
@@ -171,6 +174,7 @@ def mostrarDeparts():
   dfT  = pd.json_normalize(df['data'])
   dfTt = dfT.T.reset_index()
   normalizado = pd.json_normalize(dfTt[0])
-  print(normalizado)
+  
+  return (normalizado)
 
-mostrarDeparts()
+print(mostrarDeparts())

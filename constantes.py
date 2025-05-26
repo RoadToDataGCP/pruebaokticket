@@ -1,5 +1,5 @@
 TOKEND , REFRESHTOKEND = None, None
-HOST = 'https://apipre.okticket.es/v2/public'
+HOST = 'https://api.okticket.es/v2/public'
 
 CABECERAUSUARIOS = [
             'id', 
