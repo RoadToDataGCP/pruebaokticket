@@ -157,6 +157,8 @@ def crearDepartamento():
 #crearDepartamento()
 
 
+
+#Probando cosas para extraer hojas de gastos y gastos
 def mostrarDeparts():
   url=f'{host}/api/departments'
 
@@ -175,6 +177,58 @@ def mostrarDeparts():
   dfTt = dfT.T.reset_index()
   normalizado = pd.json_normalize(dfTt[0])
   
-  return (normalizado)
+  return normalizado
 
-print(mostrarDeparts())
+#print(mostrarDeparts())
+
+
+def mostrarGastosDeparts():
+  token = autUser()
+  headers = {
+    'Authorization': f'Bearer {token}'
+  }
+  expenses = pd.DataFrame()
+  departamentos = mostrarDeparts()
+  for index,depart in departamentos.iterrows():
+    url=f'{host}/api/departments/{depart['id']}/expenses'
+    payload={}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    data = response.json()
+    df = pd.json_normalize(data)
+    exp = pd.json_normalize(df['data'])
+    expenses = pd.concat([expenses,exp],ignore_index=True)
+
+  expenses1=  pd.json_normalize(expenses[0])
+  expenses2 = pd.concat([expenses[1]])
+  expenses2 = expenses2.dropna()
+  expensesTotal = pd.DataFrame()
+  expensesTotal = pd.json_normalize(expenses2)
+  expensesTotal  = pd.concat([expensesTotal,expenses1], ignore_index=True)
+  expensesTotal.to_csv('gastosVarios.csv',index=False)
+  
+  print(expensesTotal)
+
+#mostrarGastosDeparts()
+
+
+def mostrarReports():
+
+  url = f"{host}/api/reports"
+
+  payload={}
+  headers = {
+    'Authorization': f'Bearer {autUser()}',
+    'Accept': 'application/json',
+  }
+
+  response = requests.request("GET", url, headers=headers, data=payload)
+  data = response.json()
+
+  df = pd.json_normalize(data)
+  dfN = pd.json_normalize(df['data'])
+  dfnT = dfN.T.reset_index()
+  normalizdo = pd.json_normalize(dfnT[0])
+  print(normalizdo[['id','name','user_id','company_id','department_id','status_id','created_at','updated_at']])
+
+
+mostrarReports()

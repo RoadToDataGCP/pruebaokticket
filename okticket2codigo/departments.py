@@ -4,7 +4,7 @@ import requests as rq
 import json
 import os
 
-def crear_deparments(name, idcompany):
+def crear_departments(name, idcompany):
     url=f'{os.getenv('HOST')}/api/departments'
     payload = json.dumps({
         'name': name,
@@ -19,7 +19,7 @@ def crear_deparments(name, idcompany):
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
 
-def listado_total_deparments():
+def listado_total_departments():
     url=f'{os.getenv('HOST')}/api/departments'
 
     payload = json.dumps({

@@ -3,7 +3,7 @@ from utils import generar_cif_random, obtener_dict_namecompany_idcompany, obtene
 from obtenertoken import obtener_tokend
 from company import crear_company, listado_total_company
 from users import crear_user, listado_total_users, listado_users_de_una_company, asociar_user_a_department
-from departments import crear_deparments, listado_total_deparments
+from departments import crear_departments, listado_total_departments
 from expenses import crear_expenses, listado_total_expenses
 from reports import create_report, listado_total_reports
 from crearcsv import crear_csv_user, crear_csv_basico, crear_csv_reports
@@ -54,10 +54,10 @@ def main():
         company_id = namecompany_idcompany["id"]
         for namedept in departments:
             print(f"Creando departamento {namedept} para la empresa {name} con ID {company_id}")
-            #crear_deparments(namedept, company_id)
+            #crear_departments(namedept, company_id)
 
     #asociar user a un dept 
-    datosdepartments = listado_total_deparments()
+    datosdepartments = listado_total_departments()
     lista_iddept_idcompany = obtener_dict_idept_idcompany(datosdepartments)
     for iddept_idcompany in lista_iddept_idcompany:
         id_dept = iddept_idcompany["id_dept"]
