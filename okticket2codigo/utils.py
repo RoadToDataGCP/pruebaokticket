@@ -9,10 +9,12 @@ def generar_cif_random():
     cif = f'{first_letter}{digits}{control_char}'
     return cif
 
+
 def generar_tipo_combustible():
     df = pd.read_csv('okticket2codigo/csv/emisiones.csv')
     lista_conbustible = df['Combustible'].tolist()
     return random.choice(lista_conbustible)
+
 
 def obtener_dict_namecompany_idcompany(datoscompany):
     listacompany = list()
@@ -37,6 +39,7 @@ def obtener_dict_emailusers_idusers(datosuser):
         listausers.append(email_id_user)
     return listausers
 
+
 def obtener_dict_idept_idcompany(datosdepartment):
     listaiddeptidcompany = list()
     departments = datosdepartment['data']
@@ -47,6 +50,7 @@ def obtener_dict_idept_idcompany(datosdepartment):
         }
         listaiddeptidcompany.append(id_department_id_company)
     return listaiddeptidcompany
+
 
 def obtener_dict_iduser_idcompany(datossuser):
     listaiduseridcompany = list()
@@ -61,6 +65,7 @@ def obtener_dict_iduser_idcompany(datossuser):
                 }
         listaiduseridcompany.append(id_department_id_company)
     return listaiduseridcompany
+
 
 def obtener_dict_iduser_idcompany_idticket(datosexpenses):
     listaiduseridcompanyidticket = list()
@@ -85,15 +90,6 @@ def obtener_dict_iduser_idcompany_idticket(datosexpenses):
             listaiduseridcompanyidticket.append(id_user_id_company_id_ticket)
     return listaiduseridcompanyidticket
 
-# NO SE UTILIZA 
-def obtener_dict_combustible_litros(datosexpenses):
-    listacombustiblelitros = list()
-    expenses = datosexpenses['data']
-    for expens in expenses:
-        combustible_litros = expens.get('custom_fields', None)
-        if combustible_litros is not None:
-            listacombustiblelitros.append(combustible_litros) 
-    return listacombustiblelitros
 
 def calcular_huella_de_carbono(combustible, litros):
     df_emisiones = pd.read_csv('okticket2codigo/csv/emisiones.csv')
