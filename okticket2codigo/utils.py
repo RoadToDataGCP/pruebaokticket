@@ -1,5 +1,6 @@
 import random
 import string
+import pandas as pd
 
 def generar_cif_random():
     first_letter = random.choice('ABCDEFGHJNPQRSUVW')
@@ -78,3 +79,19 @@ def obtener_dict_iduser_idcompany_idticket(datosexpenses):
             }
             listaiduseridcompanyidticket.append(id_user_id_company_id_ticket)
     return listaiduseridcompanyidticket
+
+def obtener_dict_combustible_litros(datosexpenses):
+    listacombustiblelitros = list()
+    expenses = datosexpenses['data']
+    for expens in expenses:
+        combustible_litros = expens.get('custom_fields', None)
+        if combustible_litros is not None:
+            listacombustiblelitros.append(combustible_litros) 
+    return listacombustiblelitros
+
+def calcular_huella_de_carbono(combustible, litros):
+    df_emisiones = pd.read_csv('okticket2codigo/csv/emisiones.csv')
+    for _,emisiones in df_emisiones.iterrows():
+        if emisiones['Combustible'] == combustible:
+            consumo = emisiones['CO2e_kg_por_litro'] 
+            return consumo * litros

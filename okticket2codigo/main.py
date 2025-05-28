@@ -1,12 +1,12 @@
 from faker import Faker
-from utils import generar_cif_random, obtener_dict_namecompany_idcompany, obtener_dict_idept_idcompany, obtener_dict_emailusers_idusers, obtener_dict_iduser_idcompany, obtener_dict_iduser_idcompany_idticket
+from utils import generar_cif_random, obtener_dict_namecompany_idcompany, obtener_dict_idept_idcompany, obtener_dict_emailusers_idusers, obtener_dict_iduser_idcompany, obtener_dict_iduser_idcompany_idticket, calcular_huella_de_carbono, obtener_dict_combustible_litros
 from obtenertoken import obtener_tokend
 from company import crear_company, listado_total_company
 from users import crear_user, listado_total_users, listado_users_de_una_company, asociar_user_a_department
 from departments import crear_deparments, listado_total_deparments
 from expenses import crear_expenses, listado_total_expenses
 from reports import create_report, listado_total_reports
-from crearcsv import crear_csv_user, crear_csv_basico, crear_csv_reports
+from crearcsv import crear_csv_basico, crear_csv_user, crear_csv_reports, crear_csv_expenses
 from subirgooglecloud import subirabucket, creartablaBigQuery
 from dotenv import load_dotenv
 
@@ -14,6 +14,7 @@ import random
 
 
 def main():
+    
     # Crear una instancia de Faker
     fake = Faker('es_ES')
 
@@ -72,8 +73,7 @@ def main():
 
         print(f"Asociando {emailuser} de la emp {id_company} al dept {id_dept}")
         #asociar_user_a_department(iduser,emailuser,id_company,id_dept)
-        #create_report(id_company, id_user, [], f'Hoja de gasto de {id_dept}')
-    
+            
     #csv
     crear_csv_basico(datosdepartments, "departments")
 
@@ -88,11 +88,11 @@ def main():
         name = fake.sentence(nb_words=3).rstrip('.')
         comments = fake.text(max_nb_chars=100)
         print(f"Crear gasto para la la emp {id_company} y el usuario {id_user} con nombre {name}")
-        #crear_expenses(id_company, id_user, date, amount, name, comments)
+        crear_expenses(id_company, id_user, date, amount, name, comments)
 
     #csv
     datosexpenses = listado_total_expenses()
-    crear_csv_basico(datosexpenses, "expenses")
+    crear_csv_expenses(datosexpenses)
 
 # HOJA DE GASTOS
     #crear
@@ -108,6 +108,15 @@ def main():
     #csv
     datosreports = listado_total_reports()
     crear_csv_reports(datosreports)
+    
+# HUELLA DE CARBONO
+    lista_combustible_litros = obtener_dict_combustible_litros(datosexpenses)
+    for combustible_litros in lista_combustible_litros: 
+        combustible = combustible_litros['Combustible']
+        litros = combustible_litros['Litros']
+        huelladecarbono = calcular_huella_de_carbono(combustible, litros)
+        print(f'La huella de carbono es de {huelladecarbono}')
+       
     
 if __name__ == "__main__":
     load_dotenv()
