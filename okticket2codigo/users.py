@@ -3,15 +3,16 @@ import constantes
 import requests as rq
 import json
 import os
+import random
 
-def crear_user(name_company, name, email, password, ids_companies, custom_id, custom_id2, custom_id3):
+def crear_user(name, email, password, ids_companies, custom_id, custom_id2, custom_id3):
+    department_id = str(random.randint(10, 99))
     url = f'{os.getenv('HOST')}/api/users'
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'company': name_company
-    }
+        'Content-Type': 'application/json'
+        }
     payload = {
         'name' : name,
         'email': email,

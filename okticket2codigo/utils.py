@@ -9,6 +9,11 @@ def generar_cif_random():
     cif = f'{first_letter}{digits}{control_char}'
     return cif
 
+def generar_tipo_combustible():
+    df = pd.read_csv('okticket2codigo/csv/emisiones.csv')
+    lista_conbustible = df['Combustible'].tolist()
+    return random.choice(lista_conbustible)
+
 def obtener_dict_namecompany_idcompany(datoscompany):
     listacompany = list()
     companies= datoscompany['data']
@@ -80,6 +85,7 @@ def obtener_dict_iduser_idcompany_idticket(datosexpenses):
             listaiduseridcompanyidticket.append(id_user_id_company_id_ticket)
     return listaiduseridcompanyidticket
 
+# NO SE UTILIZA 
 def obtener_dict_combustible_litros(datosexpenses):
     listacombustiblelitros = list()
     expenses = datosexpenses['data']
