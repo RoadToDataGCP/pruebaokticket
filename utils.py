@@ -13,6 +13,9 @@ import csv
 from google.cloud import storage
 from google.cloud import bigquery
 import logging
+from faker import Faker
+
+fake = Faker()
 
 def obtener_nameid(empresas):
     nombreid = list()
@@ -50,7 +53,6 @@ def obtener_userid_empresaid(usuarios):
             useidempid1['idemp'] = emp['id']
         useridempid.append(useidempid1)
     return useridempid
-
 
 def crearCsvUsuarios(datos):
     datos = datos['data']
@@ -290,7 +292,6 @@ def borrar_datos_tabla(client, project_id, dataset_id, table_id):
     client.query(query).result()
     logging.info(f"🗑️ Se han borrado los datos existentes en la tabla '{table_ref}'.")
 
-
 # Función principal para automatizar la carga de datos a BigQuery
 # y manejar errores, reintentos, logging y limitación de tasa
 def automatizar_carga_bigquery(csv_path, project_id, dataset_id, table_id):
@@ -315,3 +316,357 @@ def automatizar_carga_bigquery(csv_path, project_id, dataset_id, table_id):
 
     logging.info("🎯 Proceso finalizado correctamente.")
 
+# Función principal dummy: simula la creación de gasto y calcula huella
+def crear_gasto_dummy():
+    # Payload simulado (mismo formato que usaría en producción)
+    payload = {
+        "user_id": 195605,
+        "company_id": 73413,
+        "department_id": 1,
+        "type_id": 0,
+        "category_id": 0,
+        "status_id": 1,
+        "date": "2018-07-24 15:30:00",
+        "amount": 0.4,
+        "name": "Gijón - El Entrego",
+        "custom_fields": { "Combustible": "gasoil", "Litros": 200 },
+        "comments": "Viaje del trabajo a casa"
+    }
+
+    # Simulamos una respuesta como la del API real
+    fake_api_response = {
+        "data": {
+            **payload,
+            "source": "SOURCE_UNKNOWN",
+            "created_by": 195606,
+            "tax_model_id": 1,
+            "currency": "EUR",
+            "updated_at": "2025-05-27 10:40:06",
+            "created_at": "2025-05-27 10:40:06",
+            "_id": "68359686b395cfe6e8056bd7",
+            "integrity_hash": "07f938f83227ec35cb2dd0e837db9bcb4d38813085e0dca800260b8944776f87",
+            "id": "68359686b395cfe6e8056bd7"
+        },
+        "status": "ok"
+    }
+
+    print("✅ [DUMMY] Gasto simulado creado correctamente")
+
+    # Llamada interna a la función auxiliar
+    custom_fields = fake_api_response['data'].get('custom_fields', {})
+    calcular_huella_carbono(custom_fields)
+
+    return fake_api_response
+
+# Función auxiliar: calcula la huella de carbono
+def calcular_huella_carbono(custom_fields):
+    combustible = custom_fields.get("Combustible", "").lower()
+    litros = custom_fields.get("Litros", 0)
+
+    # Factores de emisión (kg CO2e por litro)
+    factores_emision = {
+        "gasoil": 2.68,
+        "gas": 2.35,
+        "electrico": 0  # Ajusta si tienes un factor específico
+    }
+
+    if combustible in factores_emision:
+        factor = factores_emision[combustible]
+        huella = litros * factor
+        return huella
+    else:
+        return None
+# Función principal: crea el gasto y calcula la huella
+def crear_gasto():
+    api_url = f"{os.getenv('HOST')}/api/expenses"
+
+    payload = {
+        "user_id": 195605,
+        "company_id": 73413,
+        "department_id": 1,
+        "type_id": 0,
+        "category_id": 0,
+        "status_id": 1,
+        "date": "2018-07-24 15:30:00",
+        "amount": 0.4,
+        "name": "Gijón - El Entrego",
+        "custom_fields": { "Combustible": "gasoil", "Litros": fake.random_int(min=100, max=300) },
+        "comments": "Viaje del trabajo a casa"
+    }
+
+    headers = {
+        'Authorization': f'Bearer {constantes.TOKEND}',
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        response = requests.post(api_url, json=payload, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+        if data.get("status") != "ok":
+            print("⚠️ Respuesta no OK del API")
+            return
+
+        gasto = data.get("data", {})
+        custom_fields = gasto.get('custom_fields', {})
+        company = gasto.get('company', {})
+        license_info = company.get('license', {})
+        user = gasto.get('user', {})
+
+        litros = custom_fields.get("Litros", 0)
+        huella = calcular_huella_carbono(custom_fields)
+        huella_valor = round(huella, 2) if huella is not None else None
+
+        fila_csv = {
+            'data.id': gasto.get('id'),
+            'data.user_id': gasto.get('user_id'),
+            'data.company_id': gasto.get('company_id'),
+            'data.department_id': gasto.get('department_id'),
+            'data.type_id': gasto.get('type_id'),
+            'data.category_id': gasto.get('category_id'),
+            'data.status_id': gasto.get('status_id'),
+            'data.date': gasto.get('date'),
+            'data.amount': gasto.get('amount'),
+            'data.name': gasto.get('name'),
+            'data.custom_fields.Combustible': custom_fields.get('Combustible'),
+            'data.custom_fields.Litros': litros,
+            'huella_carbono': huella_valor,
+            'data.comments': gasto.get('comments'),
+            'data.source': gasto.get('source'),
+            'data.updated_at': gasto.get('updated_at'),
+            'data.created_at': gasto.get('created_at'),
+            'data._id': gasto.get('_id'),
+            'data.integrity_hash': gasto.get('integrity_hash'),
+            'data.company.id': company.get('id'),
+            'data.company.name': company.get('name'),
+            'data.company.cif': company.get('cif'),
+            'data.company.fiscal_address': company.get('fiscal_address'),
+            'data.company.city': company.get('city'),
+            'data.company.contact_number': company.get('contact_number'),
+            'data.company.license_id': company.get('license_id'),
+            'data.company.company_size': company.get('company_size'),
+            'data.company.verify_image_token': company.get('verify_image_token'),
+            'data.company.country_id': company.get('country_id'),
+            'data.company.currency': company.get('currency'),
+            'data.company.distance_unit_price': company.get('distance_unit_price'),
+            'data.company.okt_card_provider_token': company.get('okt_card_provider_bussiness_token'),
+            'data.company.group_id': company.get('group_id'),
+            'data.company.custom_id': company.get('custom_id'),
+            'data.company.license.id': license_info.get('id'),
+            'data.company.license.updated_at': license_info.get('updated_at'),
+            'data.company.license.deleted_at': license_info.get('deleted_at'),
+            'data.user.id': user.get('id'),
+            'data.user.name': user.get('name'),
+            'data.user.email': user.get('email'),
+            'data.user.id_role': user.get('id_role'),
+            'data.user.status_id': user.get('status_id'),
+            'data.user.company_type_id': user.get('company_type_id'),
+            'data.user.updated_at': user.get('updated_at'),
+            'data.user.deleted_at': user.get('deleted_at'),
+            'data.user.active_company': user.get('active_company'),
+            'data.user.active_department': user.get('active_department'),
+            'data.user.custom_id': user.get('custom_id'),
+            'data.user.custom_id_2': user.get('custom_id_2'),
+            'data.user.custom_id_3': user.get('custom_id_3')            
+        }
+
+        encabezados_csv = list(fila_csv.keys())
+        guardar_en_csv("gastos.csv", fila_csv, encabezados_csv)
+
+        print(f"✅ Gasto creado correctamente con ID: {gasto.get('_id')}")
+        if huella_valor is not None:
+            print(f"✅ Huella de carbono que emitirá: {huella_valor} kg CO2e")
+        print("✅ Datos guardados en gastos.csv")
+
+        return data
+
+    except requests.exceptions.HTTPError as errh:
+        print("❌ Error HTTP:", errh)
+    except requests.exceptions.ConnectionError as errc:
+        print("❌ Error de conexión:", errc)
+    except requests.exceptions.Timeout as errt:
+        print("❌ Timeout:", errt)
+    except requests.exceptions.RequestException as err:
+        print("❌ Error general:", err)
+
+    return None
+# Función principal: pide company_id, obtiene gastos, calcula y muestra huella
+def cargar_csv_en_diccionario(nombre_archivo, clave_id="_id"):
+    datos = {}
+    if not os.path.isfile(nombre_archivo):
+        return datos
+
+    with open(nombre_archivo, mode='r', newline='', encoding='utf-8') as archivo_csv:
+        reader = csv.DictReader(archivo_csv)
+        for fila in reader:
+            datos[fila.get(clave_id)] = fila
+    return datos
+
+def guardar_diccionario_en_csv(nombre_archivo, datos_diccionario, encabezados):
+    with open(nombre_archivo, mode='w', newline='', encoding='utf-8') as archivo_csv:
+        writer = csv.DictWriter(archivo_csv, fieldnames=encabezados)
+        writer.writeheader()
+        for fila in datos_diccionario.values():
+            writer.writerow(fila)
+
+def obtener_y_calcular_huella():
+    company_input = input("Introduce el company_id (o deja vacío para todos): ").strip()
+
+    base_url = f"{os.getenv('HOST')}/api/expenses"
+    headers = {
+        'Authorization': f'Bearer {constantes.TOKEND}',
+        'Content-Type': 'application/json'
+    }
+    params = {}
+
+    if company_input != "":
+        try:
+            company_id = int(company_input)
+            params["company"] = company_id
+        except ValueError:
+            print("❌ El company_id debe ser un número entero.")
+            return
+
+    try:
+        response = requests.get(base_url, params=params, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+        if data.get("status") != "ok":
+            print("⚠️ Respuesta no OK del API")
+            return
+
+        gastos = data.get("data", [])
+        if not gastos:
+            print("ℹ️ No se encontraron gastos.")
+            return
+
+        csv_archivo = "gastos.csv"
+        registros_csv = cargar_csv_en_diccionario(csv_archivo, clave_id="data._id")
+
+        encabezados = [
+            'data.id', 'data.user_id', 'data.company_id', 'data.department_id', 'data.type_id',
+            'data.category_id', 'data.status_id', 'data.date', 'data.amount', 'data.name',
+            'data.custom_fields.Combustible', 'data.custom_fields.Litros', 'huella_carbono',
+            'data.comments', 'data.source', 'data.updated_at', 'data.created_at', 'data._id',
+            'data.integrity_hash',
+            'data.company.id', 'data.company.name', 'data.company.cif', 'data.company.fiscal_address',
+            'data.company.city', 'data.company.contact_number', 'data.company.license_id',
+            'data.company.company_size', 'data.company.verify_image_token', 'data.company.country_id',
+            'data.company.currency', 'data.company.distance_unit_price', 'data.company.okt_card_provider_token',
+            'data.company.group_id', 'data.company.custom_id', 'data.company.license.id',
+            'data.company.license.updated_at', 'data.company.license.deleted_at',
+            'data.user.id', 'data.user.name', 'data.user.email', 'data.user.id_role',
+            'data.user.status_id', 'data.user.company_type_id', 'data.user.updated_at',
+            'data.user.deleted_at', 'data.user.active_company', 'data.user.active_department',
+            'data.user.custom_id', 'data.user.custom_id_2', 'data.user.custom_id_3'
+        ]
+
+        for gasto in gastos:
+            # Extraemos sub-objetos company, user, license_info con fallback a dict vacía
+            company = gasto.get('company', {})
+            user = gasto.get('user', {})
+            license_info = company.get('license', {})
+
+            custom_fields = gasto.get('custom_fields', {})
+            litros = custom_fields.get('Litros', 0)
+
+            huella = calcular_huella_carbono(custom_fields)
+            huella_valor = round(huella, 2) if huella is not None else ""
+
+            expense_id = gasto.get('_id')
+
+            fila_csv = {
+                'data.id': gasto.get('id'),
+                'data.user_id': gasto.get('user_id'),
+                'data.company_id': gasto.get('company_id'),
+                'data.department_id': gasto.get('department_id'),
+                'data.type_id': gasto.get('type_id'),
+                'data.category_id': gasto.get('category_id'),
+                'data.status_id': gasto.get('status_id'),
+                'data.date': gasto.get('date'),
+                'data.amount': gasto.get('amount'),
+                'data.name': gasto.get('name'),
+                'data.custom_fields.Combustible': custom_fields.get('Combustible'),
+                'data.custom_fields.Litros': litros,
+                'huella_carbono': huella_valor,
+                'data.comments': gasto.get('comments'),
+                'data.source': gasto.get('source'),
+                'data.updated_at': gasto.get('updated_at'),
+                'data.created_at': gasto.get('created_at'),
+                'data._id': expense_id,
+                'data.integrity_hash': gasto.get('integrity_hash'),
+                'data.company.id': company.get('id'),
+                'data.company.name': company.get('name'),
+                'data.company.cif': company.get('cif'),
+                'data.company.fiscal_address': company.get('fiscal_address'),
+                'data.company.city': company.get('city'),
+                'data.company.contact_number': company.get('contact_number'),
+                'data.company.license_id': company.get('license_id'),
+                'data.company.company_size': company.get('company_size'),
+                'data.company.verify_image_token': company.get('verify_image_token'),
+                'data.company.country_id': company.get('country_id'),
+                'data.company.currency': company.get('currency'),
+                'data.company.distance_unit_price': company.get('distance_unit_price'),
+                'data.company.okt_card_provider_token': company.get('okt_card_provider_bussiness_token'),
+                'data.company.group_id': company.get('group_id'),
+                'data.company.custom_id': company.get('custom_id'),
+                'data.company.license.id': license_info.get('id'),
+                'data.company.license.updated_at': license_info.get('updated_at'),
+                'data.company.license.deleted_at': license_info.get('deleted_at'),
+                'data.user.id': user.get('id'),
+                'data.user.name': user.get('name'),
+                'data.user.email': user.get('email'),
+                'data.user.id_role': user.get('id_role'),
+                'data.user.status_id': user.get('status_id'),
+                'data.user.company_type_id': user.get('company_type_id'),
+                'data.user.updated_at': user.get('updated_at'),
+                'data.user.deleted_at': user.get('deleted_at'),
+                'data.user.active_company': user.get('active_company'),
+                'data.user.active_department': user.get('active_department'),
+                'data.user.custom_id': user.get('custom_id'),
+                'data.user.custom_id_2': user.get('custom_id_2'),
+                'data.user.custom_id_3': user.get('custom_id_3')
+            }
+
+            if expense_id in registros_csv:
+                fila_existente = registros_csv[expense_id]
+                actualizado = False
+
+                for key in encabezados:
+                    # Si el valor está vacío o None, lo actualizamos con el nuevo dato si existe
+                    if (not fila_existente.get(key) or fila_existente.get(key) in ["", "0", None]) and fila_csv.get(key):
+                        fila_existente[key] = fila_csv[key]
+                        actualizado = True
+
+                if actualizado:
+                    print(f"✅ CSV actualizado para Expense ID: {expense_id}")
+                else:
+                    print(f"ℹ️ Sin cambios necesarios para Expense ID: {expense_id}")
+
+            else:
+                # Añadimos fila nueva
+                registros_csv[expense_id] = fila_csv
+                print(f"➕ Nuevo gasto añadido al CSV: Expense ID {expense_id}")
+
+        if registros_csv:
+            guardar_diccionario_en_csv(csv_archivo, registros_csv, encabezados)
+            print(f"✅ CSV {csv_archivo} guardado con todas las actualizaciones y añadidos.")
+
+            # Borramos el CSV al final, según lo solicitado
+            os.remove(csv_archivo)
+            print(f"🗑️ CSV {csv_archivo} eliminado tras la operación.")
+
+        print("✅ Cálculo, actualización y limpieza completados.")
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error en la solicitud: {e}")
+    except Exception as ex:
+        print(f"❌ Error inesperado: {ex}")
+def guardar_en_csv(nombre_archivo, datos, encabezados):
+    archivo_existe = os.path.isfile(nombre_archivo)
+    with open(nombre_archivo, mode='a', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=encabezados)
+        if not archivo_existe:
+            writer.writeheader()
+        writer.writerow(datos)

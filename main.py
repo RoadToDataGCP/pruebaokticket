@@ -2,7 +2,7 @@ from faker import Faker
 from obtenertoken import obtenerTokend
 from empresa import crearEmpresa, verEmpresas, crearDepartamento, mostrarDeparts
 from users import createUser, obtenerListaTotalUsuarios, asociar_usuario_a_dept, listado_email_users_de_empresa
-from utils import obtener_nameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios, obtener_deptid_empid
+from utils import obtener_nameid, obtener_ids_users_companies, convertir_json_a_csv_expenses, subir_a_bucket, automatizar_carga_bigquery, crearCsvUsuarios, obtener_deptid_empid, crear_gasto, obtener_y_calcular_huella
 from expenses import create_gasto
 import constantes
 from datetime import datetime
@@ -107,9 +107,12 @@ def subir_users():
 
 
 if __name__ == "__main__":
-    main()
+    obtenerTokend(408, "8sMHrD2BHBuCjMtEvvNfY8ZqCD8YAjSFh3d8etWZ", "admin@roadtodata.com", "Rtd:2025")
+
+    #main()
     #subir_expenses()
     #subir_empresas()
     #subir_users()
-
+    crear_gasto()
+    obtener_y_calcular_huella()
 
