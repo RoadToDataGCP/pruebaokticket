@@ -48,7 +48,7 @@ def listado_total_users():
     return datos
 
 def listado_total_users_company_departments():
-    url = f'{os.getenv('HOST')}/api/users?with=departments'
+    url = f"{os.getenv('HOST')}/api/users?with=departments"
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
