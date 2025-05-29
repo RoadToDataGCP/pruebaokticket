@@ -1,2 +1,0 @@
-id,name,cif,fiscal_address,postal_code,city,logo_path,contact_number,contact_email,license_id,max_users,type_id,created_at,updated_at,deleted_at,workflow_id,advance_payment_workflow_id,travel_workflow_id,language,pdf_logo,date_filter_code,sales,employee_number,company_size,verify_image_token,country_id,currency,distance_unit,distance_unit_price,okt_card_provider_bussiness_token,group_id,custom_id
-73413,RoadToData - DEMO,B88160064,,,,,,,3684,50,1,2025-04-23 06:51:58,2025-05-21 11:26:59,,,,,es,,,2580695.47,29,1,False,ES,EUR,KM,0.26,,,
