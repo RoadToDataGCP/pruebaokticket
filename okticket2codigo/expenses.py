@@ -5,10 +5,9 @@ import random
 from controlerrores import control_errores
 import constantes
 
+def crear_expenses(id_company, id_user, date, amount, name, comments):
+    url = f"{os.getenv('HOST')}/api/expenses"
 
-def crear_expenses(id_company, id_user, date, amount, name, comments, combustible, litros):
-    url = f'{os.getenv('HOST')}/api/expenses'
-    
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Content-Type': 'application/json'
@@ -38,7 +37,7 @@ def crear_expenses(id_company, id_user, date, amount, name, comments, combustibl
 
 
 def listado_total_expenses():
-    url = f'{os.getenv('HOST')}/api/expenses'
+    url = f"{os.getenv('HOST')}/api/expenses"
 
     payload={}
     headers = {
