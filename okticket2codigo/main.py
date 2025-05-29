@@ -80,7 +80,7 @@ def main():
 #EL ID DE DEPARTAMENTO ME LO INVENTO 
     #crear
     lista_idcompany_iduser = obtener_dict_iduser_idcompany(datosuser)
-    lista_idcompany_iduser = random.choices(lista_idcompany_iduser, random.choice(range(2,5)))
+    lista_idcompany_iduser = random.choices(lista_idcompany_iduser,k=random.choice(range(2,5)))
     for idcompany_iduser in lista_idcompany_iduser:
         id_user = idcompany_iduser["id_user"]
         id_company = idcompany_iduser["id_company"]
