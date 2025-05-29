@@ -10,7 +10,7 @@ def crear_csv_user(datosuser):
     allcontenido = pd.json_normalize(contenidoT[0]) 
     allcontenido['companies'] = allcontenido['companies'].apply(lambda x: next(iter(x or []), {}).get('id'))
     os.makedirs('okticket2codigo/output', exist_ok=True)
-    allcontenido.to_csv("output/users.csv", mode="w", index=False)
+    allcontenido.to_csv("okticket2codigo/output/users.csv", mode="w", index=False)
     print("CSV users creado")
 
 
@@ -29,7 +29,7 @@ def crear_csv_reports(datosreports):
             if isinstance(lista, list) else []
         )
     os.makedirs('okticket2codigo/output', exist_ok=True)
-    allcontenido.to_csv("output/reports.csv", mode="w", index=False)
+    allcontenido.to_csv("okticket2codigo/output/reports.csv", mode="w", index=False)
     print("CSV reports creado")
 
 
@@ -44,7 +44,7 @@ def crear_csv_expenses(datosexpenses):
     allcontenido['huella_de_carbono'] = allcontenido.apply(lambda fila: calcular_huella_de_carbono(fila['combustible'], fila['litros'])if pd.notna(fila.get('combustible')) and pd.notna(fila.get('litros')) else None,axis=1)
 
     os.makedirs('okticket2codigo/output', exist_ok=True)
-    allcontenido.to_csv(f'output/expenses.csv', index=False)
+    allcontenido.to_csv(f'okticket2codigo/output/expenses.csv', index=False)
     print(f'CSV expenses.csv creado')      
 
 
@@ -54,5 +54,5 @@ def crear_csv_basico(datos,nombre):
     contenidoT = contenido.T.reset_index()
     allcontenido = pd.json_normalize(contenidoT[0])
     os.makedirs('okticket2codigo/output', exist_ok=True)
-    allcontenido.to_csv(f'output/{nombre}.csv', index=False)
+    allcontenido.to_csv(f'okticket2codigo/output/{nombre}.csv', index=False)
     print(f'CSV {nombre}.csv creado')
