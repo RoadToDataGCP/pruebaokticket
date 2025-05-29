@@ -6,7 +6,7 @@ from controlerrores import control_errores
 import constantes
 
 
-def crear_expenses(id_company, id_user, date, amount, name, comments):
+def crear_expenses(id_company, id_user, date, amount, name, comments, combustible, litros):
     url = f'{os.getenv('HOST')}/api/expenses'
     
     headers = {
@@ -28,6 +28,7 @@ def crear_expenses(id_company, id_user, date, amount, name, comments):
         "date": date,
         "amount": amount,
         "name": name,
+        "custom_fields": {"combustible": combustible, "litros": litros},
         "comments": comments
     }
 
