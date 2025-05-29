@@ -11,7 +11,7 @@ def generar_cif_random():
 
 
 def generar_tipo_combustible():
-    df = pd.read_csv('okticket2codigo/csv/emisiones.csv')
+    df = pd.read_csv('csv/emisiones.csv')
     lista_conbustible = df['Combustible'].tolist()
     return random.choice(lista_conbustible)
 
