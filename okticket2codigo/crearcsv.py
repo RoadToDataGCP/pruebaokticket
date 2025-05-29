@@ -18,7 +18,7 @@ def crear_csv_reports(datosreports):
     allcontenido = pd.json_normalize(contenidoT[0]) 
     allcontenido.drop('status_log', axis=1, inplace=True)
     allcontenido['expenses'] = allcontenido['expenses'].apply(lambda lista: [g['_id'] for g in lista if isinstance(g, dict) and '_id' in g] if isinstance(lista, list) else [])
-    allcontenido.to_csv("okticket2codigo/csv/reports.csv", mode="w", index=False)
+    allcontenido.to_csv("okticket2codigo/csv/reports.csv", mode="w", index=False )
     print("CSV reports creado")
 
 
