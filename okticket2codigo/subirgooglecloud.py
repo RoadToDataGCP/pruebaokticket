@@ -16,20 +16,27 @@ def subirabucket(archivo, nombrebucket):
         print(f"Error al subir el csv al bucket{e}")
         
         
-from google.cloud import bigquery
-import csv
-
 def creartablaBigQuery(archivocsv, carpetatabla, nombretabla):
     try:
+        client = bigquery.Client()
         reftabla = f"r2d-interno-dev.{carpetatabla}.{nombretabla}"
+        dataset_ref = client.dataset(carpetatabla)
+        table_ref = dataset_ref.table(nombretabla)
 
-        # Leer encabezados del CSV
-        with open(archivocsv, newline='', encoding='utf-8') as archivo_csv:
-            lector = csv.reader(archivo_csv)
-            encabezados = next(lector)  # Primera fila
+        with open(archivocsv, "r", encoding="utf-8") as archivo_texto:
+            primera_linea = archivo_texto.readline()
+            encabezados = [col.strip() for col in primera_linea.strip().split(",")]
 
-        # Crear el schema con todos los campos como STRING
-        esquema = [bigquery.SchemaField(nombre.strip(), "STRING") for nombre in encabezados]
+        esquema = [bigquery.SchemaField(nombre, "STRING") for nombre in encabezados]
+
+        try:
+            client.get_table(table_ref)
+            print(f"La tabla {reftabla} ya existe. Se truncará al cargar.")
+        except Exception:
+            print(f"La tabla {reftabla} no existe. Creándola...")
+            tabla = bigquery.Table(table_ref, schema=esquema)
+            client.create_table(tabla)
+            print("Tabla creada correctamente.")
 
         job_config = bigquery.LoadJobConfig(
             source_format=bigquery.SourceFormat.CSV,
@@ -40,8 +47,6 @@ def creartablaBigQuery(archivocsv, carpetatabla, nombretabla):
             field_delimiter=",",
             quote_character='"',
         )
-
-        client = bigquery.Client()
 
         with open(archivocsv, "rb") as archivo:
             job = client.load_table_from_file(archivo, reftabla, job_config=job_config)
