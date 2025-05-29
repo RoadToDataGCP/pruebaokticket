@@ -4,7 +4,7 @@ from controlerrores import control_errores
 import os
 
 def obtener_tokend():
-    url = f'{os.getenv('HOST')}/oauth/token'
+    url = f"{os.getenv('HOST')}/oauth/token"
     payload = {
         "grant_type": "password",
         "client_id": os.getenv("CLIENT_ID"),
