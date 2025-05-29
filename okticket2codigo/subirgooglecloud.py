@@ -15,7 +15,7 @@ def subirabucket(archivo, nombrebucket):
     except Exception as e:
         print(f"Error al subir el csv al bucket{e}")
         
-        
+
 def creartablaBigQuery(archivocsv, carpetatabla, nombretabla):
     try:
         client = bigquery.Client()
@@ -47,12 +47,9 @@ def creartablaBigQuery(archivocsv, carpetatabla, nombretabla):
             field_delimiter=",",
             quote_character='"',
         )
-
         with open(archivocsv, "rb") as archivo:
             job = client.load_table_from_file(archivo, reftabla, job_config=job_config)
             job.result()
-        
         print("CSV subido a la tabla de BigQuery con todos los campos como STRING.")
-        
     except Exception as e:
         print(f"Error al subir el CSV a la tabla BigQuery: {e}")
