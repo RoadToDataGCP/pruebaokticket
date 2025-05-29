@@ -7,8 +7,8 @@ import constantes
 
 
 def crear_expenses(id_company, id_user, date, amount, name, comments):
-    url = f'{os.getenv('HOST')}/api/expenses'
-    
+    url = f"{os.getenv('HOST')}/api/expenses"
+
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ def crear_expenses(id_company, id_user, date, amount, name, comments):
 
 
 def listado_total_expenses():
-    url = f'{os.getenv('HOST')}/api/expenses'
+    url = f"{os.getenv('HOST')}/api/expenses"
 
     payload={}
     headers = {

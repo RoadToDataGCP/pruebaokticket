@@ -5,7 +5,7 @@ import json
 import os
 
 def crear_deparments(name, idcompany):
-    url=f'{os.getenv('HOST')}/api/departments'
+    url=f"{os.getenv('HOST')}/api/departments"
     payload = json.dumps({
         'name': name,
         'company_id': idcompany
@@ -20,7 +20,7 @@ def crear_deparments(name, idcompany):
 
 
 def listado_total_deparments():
-    url=f'{os.getenv('HOST')}/api/departments'
+    url=f"{os.getenv('HOST')}/api/departments"
 
     payload = json.dumps({
 

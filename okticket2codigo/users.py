@@ -5,7 +5,7 @@ import json
 import os
 
 def crear_user(name_company, name, email, password, ids_companies, custom_id, custom_id2, custom_id3):
-    url = f'{os.getenv('HOST')}/api/users'
+    url = f"{os.getenv('HOST')}/api/users"
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -33,8 +33,8 @@ def crear_user(name_company, name, email, password, ids_companies, custom_id, cu
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
 def listado_total_users():
-    
-    url = f'{os.getenv('HOST')}/api/users?with=companies'
+
+    url = f"{os.getenv('HOST')}/api/users?with=companies"
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -47,7 +47,7 @@ def listado_total_users():
     return datos
 
 def listado_users_de_una_company(idcompay):
-  url = f'{os.getenv('HOST')}/api/companies/{idcompay}/users'
+  url = f"{os.getenv('HOST')}/api/companies/{idcompay}/users"
   headers = {
       'Authorization': f'Bearer {constantes.TOKEND}',
       'Accept': 'application/json',
@@ -59,7 +59,7 @@ def listado_users_de_una_company(idcompay):
   return datos
 
 def asociar_user_a_department(iduser,emailuser, idcompany, iddept):
-    url = f'{os.getenv('HOST')}/api/users/{iduser}'
+    url = f"{os.getenv('HOST')}/api/users/{iduser}"
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
     }

@@ -21,7 +21,7 @@ def obtener_tokend():
     constantes.REFRESHTOKEND = datos['refresh_token']
 
 def refrescar_tokend():
-    url = f'{os.getenv('HOST')}/oauth/token'
+    url = f"{os.getenv('HOST')}/oauth/token"
     payload = {
         "grant_type": "refresh_token",
         "refresh_token": constantes.REFRESHTOKEND,

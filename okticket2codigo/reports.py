@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 def create_report(id_company, id_user, ticket_id, name):
-    url = f'{os.getenv('HOST')}/api/reports'
+    url = f"{os.getenv('HOST')}/api/reports"
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -27,7 +27,7 @@ def create_report(id_company, id_user, ticket_id, name):
     
 def listado_total_reports():
     date_max = datetime.now().strftime('%Y-%m-%dT%H:%M')
-    url = f'{os.getenv('HOST')}/api/reports?with=user,expenses&updated_date_min=1999-01-01T01:01&updated_date_max={date_max}'
+    url = f"{os.getenv('HOST')}/api/reports?with=user,expenses&updated_date_min=1999-01-01T01:01&updated_date_max={date_max}"
     payload={}
     headers = {
     'Authorization': f'Bearer {constantes.TOKEND}',
