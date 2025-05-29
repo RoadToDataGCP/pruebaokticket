@@ -4,9 +4,7 @@ from google.cloud import bigquery
 
 def subirabucket(archivo, nombrebucket):
     try: 
-        fechahoy = dt.datetime.now().strftime("%Y-%m-%d")
-        destination_blob_name = f"csv/{archivo.split('/')[-1]}"
-
+        destination_blob_name = f"output/{archivo.split('/')[-1]}"
         client = storage.Client()
         bucket = client.bucket(nombrebucket)
         blob = bucket.blob(destination_blob_name)
