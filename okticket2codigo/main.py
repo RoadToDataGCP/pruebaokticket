@@ -118,7 +118,7 @@ if __name__ == "__main__":
     
     subirabucket('okticket2codigo/output/company.csv', 'prueba-okticket')
     subirabucket('okticket2codigo/output/users.csv', 'prueba-okticket')
-    subirabucket('okticket2codigo/output/departsments.csv', 'prueba-okticket')
+    subirabucket('okticket2codigo/output/departments.csv', 'prueba-okticket')
     subirabucket('okticket2codigo/output/expenses.csv', 'prueba-okticket')
     subirabucket('okticket2codigo/output/reports.csv', 'prueba-okticket')
 
