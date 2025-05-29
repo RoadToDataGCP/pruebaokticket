@@ -5,7 +5,6 @@ import random
 from controlerrores import control_errores
 import constantes
 
-
 def crear_expenses(id_company, id_user, date, amount, name, comments):
     url = f"{os.getenv('HOST')}/api/expenses"
 
@@ -28,6 +27,7 @@ def crear_expenses(id_company, id_user, date, amount, name, comments):
         "date": date,
         "amount": amount,
         "name": name,
+        "custom_fields": {"combustible": combustible, "litros": litros},
         "comments": comments
     }
 

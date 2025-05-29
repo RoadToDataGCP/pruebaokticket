@@ -25,9 +25,11 @@ def create_report(id_company, id_user, ticket_id, name):
     datos = control_errores(response)
     #print(json.dumps(datos, indent=4, ensure_ascii=False))
     
+    
 def listado_total_reports():
     date_max = datetime.now().strftime('%Y-%m-%dT%H:%M')
     url = f"{os.getenv('HOST')}/api/reports?with=user,expenses&updated_date_min=1999-01-01T01:01&updated_date_max={date_max}"
+
     payload={}
     headers = {
     'Authorization': f'Bearer {constantes.TOKEND}',

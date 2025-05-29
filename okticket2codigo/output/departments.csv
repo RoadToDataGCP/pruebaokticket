@@ -1,0 +1,4 @@
+id,name,company_id,created_at,updated_at,deleted_at,workflow_id,advance_payment_workflow_id,travel_workflow_id
+15190,Departamento prueba,73413,2025-05-27 13:25:18,2025-05-27 13:25:18,,,,
+15201,Marketing y Comunicación,73413,2025-05-28 09:37:34,2025-05-28 09:37:34,,,,
+15202,Recursos Humanos,73413,2025-05-28 09:37:34,2025-05-28 09:37:34,,,,

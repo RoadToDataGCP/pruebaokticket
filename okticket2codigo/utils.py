@@ -1,5 +1,6 @@
 import random
 import string
+import pandas as pd
 
 def generar_cif_random():
     first_letter = random.choice('ABCDEFGHJNPQRSUVW')
@@ -7,6 +8,13 @@ def generar_cif_random():
     control_char = random.choice(string.digits + string.ascii_uppercase)
     cif = f'{first_letter}{digits}{control_char}'
     return cif
+
+
+def generar_tipo_combustible():
+    df = pd.read_csv('okticket2codigo/csv/emisiones.csv')
+    lista_conbustible = df['Combustible'].tolist()
+    return random.choice(lista_conbustible)
+
 
 def obtener_dict_namecompany_idcompany(datoscompany):
     listacompany = list()
@@ -31,6 +39,7 @@ def obtener_dict_emailusers_idusers(datosuser):
         listausers.append(email_id_user)
     return listausers
 
+
 def obtener_dict_idept_idcompany(datosdepartment):
     listaiddeptidcompany = list()
     departments = datosdepartment['data']
@@ -41,6 +50,7 @@ def obtener_dict_idept_idcompany(datosdepartment):
         }
         listaiddeptidcompany.append(id_department_id_company)
     return listaiddeptidcompany
+
 
 def obtener_dict_iduser_idcompany(datossuser):
     listaiduseridcompany = list()
@@ -55,6 +65,25 @@ def obtener_dict_iduser_idcompany(datossuser):
                 }
         listaiduseridcompany.append(id_department_id_company)
     return listaiduseridcompany
+
+def obtener_dict_iuser_idept_idcompany(datossuser):
+    listaiduseriddeptidcompany = list()
+    users = datossuser['data']
+    for user in users:
+        userid= user['id']
+        useremail= user['email']
+        listadepartments =  user['departments']
+        for dept in listadepartments:
+            id_user_id_department_id_company = {
+                'id_user': userid,
+                'email_user': useremail,
+                'id_department': dept["id"],
+                'id_company': dept["company_id"]
+                }
+        listaiduseriddeptidcompany.append(id_user_id_department_id_company)
+    return listaiduseriddeptidcompany
+
+
 
 def obtener_dict_iduser_idcompany_idticket(datosexpenses):
     listaiduseridcompanyidticket = list()
@@ -78,3 +107,11 @@ def obtener_dict_iduser_idcompany_idticket(datosexpenses):
             }
             listaiduseridcompanyidticket.append(id_user_id_company_id_ticket)
     return listaiduseridcompanyidticket
+
+
+def calcular_huella_de_carbono(combustible, litros):
+    df_emisiones = pd.read_csv('okticket2codigo/csv/emisiones.csv')
+    for _,emisiones in df_emisiones.iterrows():
+        if emisiones['Combustible'] == combustible:
+            consumo = emisiones['CO2e_kg_por_litro'] 
+            return consumo * litros

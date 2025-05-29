@@ -20,6 +20,7 @@ def obtener_tokend():
     constantes.TOKEND = datos['access_token']
     constantes.REFRESHTOKEND = datos['refresh_token']
 
+
 def refrescar_tokend():
     url = f"{os.getenv('HOST')}/oauth/token"
     payload = {

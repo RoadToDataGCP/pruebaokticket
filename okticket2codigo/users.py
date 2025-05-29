@@ -9,9 +9,8 @@ def crear_user(name_company, name, email, password, ids_companies, custom_id, cu
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'company': name_company
-    }
+        'Content-Type': 'application/json'
+        }
     payload = {
         'name' : name,
         'email': email,
@@ -32,9 +31,11 @@ def crear_user(name_company, name, email, password, ids_companies, custom_id, cu
     # Imprimir datos
     print(json.dumps(datos, indent=4, ensure_ascii=False))
 
+
 def listado_total_users():
 
     url = f"{os.getenv('HOST')}/api/users?with=companies"
+
     headers = {
         'Authorization': f'Bearer {constantes.TOKEND}',
         'Accept': 'application/json',
@@ -43,7 +44,20 @@ def listado_total_users():
 
     respuesta = rq.get(url, headers=headers)
     datos = control_errores(respuesta)
-    # Imprimir datos con formato legible
+   
+    return datos
+
+def listado_total_users_company_departments():
+    url = f'{os.getenv('HOST')}/api/users?with=departments'
+    headers = {
+        'Authorization': f'Bearer {constantes.TOKEND}',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+
+    respuesta = rq.get(url, headers=headers)
+    datos = control_errores(respuesta)
+   
     return datos
 
 def listado_users_de_una_company(idcompay):
