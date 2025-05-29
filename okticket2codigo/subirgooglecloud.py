@@ -17,6 +17,7 @@ def subirabucket(archivo, nombrebucket):
     except Exception as e:
         print(f"Error al subir el csv al bucket{e}")
         
+        
 def creartablaBigQuery(archivocsv, carpetatabla, nombretabla):
     try:
         reftabla = f"r2d-interno-dev.{carpetatabla}.{nombretabla}"

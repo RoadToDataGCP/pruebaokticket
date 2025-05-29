@@ -66,6 +66,24 @@ def obtener_dict_iduser_idcompany(datossuser):
         listaiduseridcompany.append(id_department_id_company)
     return listaiduseridcompany
 
+def obtener_dict_iuser_idept_idcompany(datossuser):
+    listaiduseriddeptidcompany = list()
+    users = datossuser['data']
+    for user in users:
+        userid= user['id']
+        useremail= user['email']
+        listadepartments =  user['departments']
+        for dept in listadepartments:
+            id_user_id_department_id_company = {
+                'id_user': userid,
+                'email_user': useremail,
+                'id_department': dept["id"],
+                'id_company': dept["company_id"]
+                }
+        listaiduseriddeptidcompany.append(id_user_id_department_id_company)
+    return listaiduseriddeptidcompany
+
+
 
 def obtener_dict_iduser_idcompany_idticket(datosexpenses):
     listaiduseridcompanyidticket = list()
