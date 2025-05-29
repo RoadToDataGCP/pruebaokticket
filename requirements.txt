@@ -1,8 +1,0 @@
-requests
-dotenv
-tqdm
-faker
-pandas
-rich
-google-cloud-storage
-google-cloud-bigquery
