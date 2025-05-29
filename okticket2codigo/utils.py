@@ -11,7 +11,7 @@ def generar_cif_random():
 
 
 def generar_tipo_combustible():
-    df = pd.read_csv('csv/emisiones.csv')
+    df = pd.read_csv('okticket2codigo/csv/emisiones.csv')
     lista_conbustible = df['Combustible'].tolist()
     return random.choice(lista_conbustible)
 
@@ -110,7 +110,7 @@ def obtener_dict_iduser_idcompany_idticket(datosexpenses):
 
 
 def calcular_huella_de_carbono(combustible, litros):
-    df_emisiones = pd.read_csv('csv/emisiones.csv')
+    df_emisiones = pd.read_csv('okticket2codigo/csv/emisiones.csv')
     for _,emisiones in df_emisiones.iterrows():
         if emisiones['Combustible'] == combustible:
             consumo = emisiones['CO2e_kg_por_litro'] 
