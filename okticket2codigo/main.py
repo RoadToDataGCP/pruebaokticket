@@ -122,10 +122,10 @@ if __name__ == "__main__":
     subirabucket('okticket2codigo/output/expenses.csv', 'prueba-okticket')
     subirabucket('okticket2codigo/output/reports.csv', 'prueba-okticket')
 
-"""
-    creartablaBigQuery('okticket2codigo/output/company.csv', 'raw_okticekt', 'okticket_company_raw')
-    creartablaBigQuery('okticket2codigo/output/users.csv', 'raw_okticekt', 'okticket_users_raw')
-    creartablaBigQuery('okticket2codigo/output/departsments.csv', 'raw_okticekt', 'okticket_departsments_raw')
-    creartablaBigQuery('okticket2codigo/output/expenses.csv', 'raw_okticekt', 'okticket_expenses_raw')
-    creartablaBigQuery('okticket2codigo/v/reports.csv', 'raw_okticekt', 'okticket_reports_raw')
-"""
+
+    creartablaBigQuery('okticket2codigo/output/company.csv', 'raw_okticket', 'okticket_company_raw')
+    creartablaBigQuery('okticket2codigo/output/users.csv', 'raw_okticket', 'okticket_users_raw')
+    creartablaBigQuery('okticket2codigo/output/departments.csv', 'raw_okticket', 'okticket_departsments_raw')
+    creartablaBigQuery('okticket2codigo/output/expenses.csv', 'raw_okticket', 'okticket_expenses_raw')
+    creartablaBigQuery('okticket2codigo/output/reports.csv', 'raw_okticket', 'okticket_reports_raw')
+
